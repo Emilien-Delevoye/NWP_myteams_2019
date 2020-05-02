@@ -6,3 +6,4 @@ CMakeLists.txt
 vgcore*
 myteams_cli
 myteams_server
+libmyteams.so
