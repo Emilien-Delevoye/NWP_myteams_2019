@@ -1,0 +1,8 @@
+cmake-build-debug
+CMakeLists.txt
+.idea
+.vscode
+*.o
+vgcore*
+myteams_cli
+myteams_server
