@@ -16,14 +16,21 @@ void help(void)
 
 int server(char *port_str)
 {
+    data_server_t data;
     int port = take_port(port_str);
-    int sckfd = init_ctr_socket(port);
+    data.control_sckt = init_ctr_socket(port);
 
-    if (port < 0 || sckfd < 0 || setup_sigcatch() < 0)
+    load_data(&data);
+    if (port < 0 || data.control_sckt < 0 || setup_sigcatch() < 0)
         return (84);
     while (server_running()) {
-
+        setup_fd_set(data);
+        select_fd(data);
+        write_data(data);
+        read_data(data);
     }
+    close_connections(data);
+    save_data(data);
     return (0);
 }
 

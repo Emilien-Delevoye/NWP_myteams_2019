@@ -11,7 +11,14 @@ NAME_CLIENT	=	myteams_cli
 SRC_SERVER	=	server/src/main.c	\
 			server/src/utils/take_port.c	\
 			server/src/control_socket/init_control_socket.c	\
-			server/src/utils/server_running.c
+			server/src/utils/server_running.c	\
+			server/src/fd_set/select_fd.c	\
+			server/src/fd_set/setup_fd_set.c	\
+			server/src/data_transfer/read_data.c	\
+			server/src/data_transfer/write_data.c	\
+			server/src/utils/close_connections.c	\
+			server/src/data_save/load_data.c	\
+			server/src/data_save/save_data.c
 
 SRC_CLIENT	=	client/src/main.c
 
