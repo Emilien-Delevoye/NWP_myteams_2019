@@ -267,4 +267,4 @@ int client_print_subscribed(char const *user_id, char const *team_id);
 */
 int client_print_unsubscribed(char const *user_id, char const *team_id);
 
-#endif /* __LOGGING_CLIENT_H__ */
+#endif

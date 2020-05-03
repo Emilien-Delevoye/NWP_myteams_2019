@@ -8,4 +8,4 @@
 #ifndef MYTEAMS_CLIENT_H
 #define MYTEAMS_CLIENT_H
 
-#endif //MYTEAMS_CLIENT_H
+#endif

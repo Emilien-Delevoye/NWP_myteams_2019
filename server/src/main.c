@@ -5,6 +5,7 @@
 ** Created by emilien
 */
 
+#include "server.h"
 #include <stdio.h>
 
 void help(void)
@@ -13,11 +14,19 @@ void help(void)
          "\tport\tis the port number on which the server socket listens.\n");
 }
 
-int main(int ac, char **av __attribute__((unused)))
+int server(char *port_str)
+{
+    int port = take_port(port_str);
+
+    printf("Waiting for connections on port %d\n", port);
+    return (0);
+}
+
+int main(int ac, char **av)
 {
     if (ac != 2) {
         help();
         return (84);
     }
-    return (0);
+    return (server(av[1]));
 }

@@ -98,4 +98,4 @@ int server_event_private_message_sended(char const *sender_id, char const *recei
 
 
 
-#endif /* __LOGGING_SERVER_H__ */
+#endif

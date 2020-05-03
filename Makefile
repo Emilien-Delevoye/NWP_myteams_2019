@@ -8,7 +8,8 @@
 NAME_SERVER	=	myteams_server
 NAME_CLIENT	=	myteams_cli
 
-SRC_SERVER	=	server/src/main.c
+SRC_SERVER	=	server/src/main.c	\
+			server/src/utils/take_port.c
 
 SRC_CLIENT	=	client/src/main.c
 
@@ -20,9 +21,11 @@ CFLAGS  += -W -Wall -Wextra -pedantic -ansi
 
 all:    $(NAME_SERVER) $(NAME_CLIENT)
 
+$(NAME_SERVER):	CFLAGS += -I server/include
 $(NAME_SERVER): $(OBJ_SERVER)
 	gcc -o $(NAME_SERVER) $(OBJ_SERVER)
 
+$(NAME_SERVER):	CFLAGS += -I client/include
 $(NAME_CLIENT): $(OBJ_CLIENT)
 	gcc -o $(NAME_CLIENT) $(OBJ_CLIENT)
 
