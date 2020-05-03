@@ -5,7 +5,19 @@
 ** Created by emilien
 */
 
-int main(int ac __attribute__((unused)), char **av __attribute__((unused)))
+#include <stdio.h>
+
+void help(void)
 {
+    puts("USAGE: ./myteams_server port\n"
+         "\tport\tis the port number on which the server socket listens.\n");
+}
+
+int main(int ac, char **av __attribute__((unused)))
+{
+    if (ac != 2) {
+        help();
+        return (84);
+    }
     return (0);
 }
