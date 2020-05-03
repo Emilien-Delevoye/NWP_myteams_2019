@@ -9,7 +9,10 @@
 #define MYTEAMS_SERVER_H
 
 /* *** Function definition *** */
+/* arguments */
 int take_port(char const *);
+/* init server */
+int init_ctr_socket(int port);
 
 
 /* *** Macros definition *** */

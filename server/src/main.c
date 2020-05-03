@@ -17,8 +17,10 @@ void help(void)
 int server(char *port_str)
 {
     int port = take_port(port_str);
+    int sckfd = init_ctr_socket(port);
 
-    printf("Waiting for connections on port %d\n", port);
+    if (port < 0 || sckfd < 0)
+        return (84);
     return (0);
 }
 
