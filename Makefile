@@ -10,7 +10,8 @@ NAME_CLIENT	=	myteams_cli
 
 SRC_SERVER	=	server/src/main.c	\
 			server/src/utils/take_port.c	\
-			server/src/control_socket/init_control_socket.c
+			server/src/control_socket/init_control_socket.c	\
+			server/src/utils/server_running.c
 
 SRC_CLIENT	=	client/src/main.c
 
@@ -18,7 +19,7 @@ OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 
 OBJ_CLIENT	=	$(SRC_CLIENT:.c=.o)
 
-CFLAGS  += -W -Wall -Wextra -pedantic -ansi -std=c11
+CFLAGS  += -W -Wall -Wextra -pedantic -ansi -std=gnu11
 
 all:    $(NAME_SERVER) $(NAME_CLIENT)
 

@@ -19,8 +19,11 @@ int server(char *port_str)
     int port = take_port(port_str);
     int sckfd = init_ctr_socket(port);
 
-    if (port < 0 || sckfd < 0)
+    if (port < 0 || sckfd < 0 || setup_sigcatch() < 0)
         return (84);
+    while (server_running()) {
+
+    }
     return (0);
 }
 

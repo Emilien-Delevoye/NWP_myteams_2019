@@ -8,11 +8,13 @@
 #ifndef MYTEAMS_SERVER_H
 #define MYTEAMS_SERVER_H
 
+#include <stdbool.h>
+
 /* *** Function definition *** */
-/* arguments */
 int take_port(char const *);
-/* init server */
 int init_ctr_socket(int port);
+bool server_running(void);
+int setup_sigcatch(void);
 
 
 /* *** Macros definition *** */
