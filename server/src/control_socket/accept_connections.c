@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <sys/socket.h>
 #include <stdlib.h>
+#include <string.h>
+#include <errno.h>
 
 static void add_new_client(data_server_t *data, int new_fd)
 {
@@ -34,12 +36,9 @@ void accept_connections(data_server_t *data)
 
     if (!FD_ISSET(data->control_sckt, &data->sckt_pannel[R_FD]))
         return;
-    printf("fd to accept : %d\n", data->control_sckt);
-    puts("avant le accept");
     new_fd = accept(data->control_sckt, NULL, 0);
-    puts("après le accept");
     if (new_fd < 0) {
-        perror("accept");
+        printf("accept: %s\n", strerror(errno));
         return;
     }
     add_new_client(data, new_fd);

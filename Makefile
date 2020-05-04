@@ -19,7 +19,8 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/utils/close_connections.c	\
 			server/src/data_save/load_data.c	\
 			server/src/data_save/save_data.c	\
-			server/src/control_socket/accept_connections.c
+			server/src/control_socket/accept_connections.c	\
+			server/src/utils/get_max_fd.c
 
 SRC_CLIENT	=	client/src/main.c
 

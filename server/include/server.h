@@ -32,6 +32,7 @@ void save_data(data_server_t data);
 void close_connections(data_server_t data);
 void load_data(data_server_t *data);
 void accept_connections(data_server_t *data);
+int get_max_fd_fct(data_server_t data);
 
 
 /* *** Macros definition *** */
@@ -56,6 +57,7 @@ typedef struct data_server_s {
     int control_sckt; //Listening socket
     fd_set sckt_pannel[2]; //sockets tabs for select
     struct client_s *list_clients;
+    int (*get_max_fd)(data_server_t);
 } data_server_t;
 
 

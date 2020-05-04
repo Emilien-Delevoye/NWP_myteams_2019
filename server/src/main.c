@@ -18,7 +18,7 @@ int server(char *port_str)
 {
     int port = take_port(port_str);
     data_server_t data = {.control_sckt = init_ctr_socket(port),
-        .list_clients = NULL};
+        .list_clients = NULL, .get_max_fd = get_max_fd_fct};
 
     load_data(&data);
     if (port < 0 || data.control_sckt < 0 || setup_sigcatch() < 0)
