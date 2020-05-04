@@ -6,19 +6,23 @@
 */
 
 #include "server.h"
-#include <stdio.h>
 #include <sys/socket.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <errno.h>
+#include <stdio.h>
 
 static void add_new_client(data_server_t *data, int new_fd)
 {
     struct client_s *n_client = malloc(sizeof(struct client_s));
     struct client_s *current = data->list_clients;
 
-    if (!n_client)
+    if (!n_client) {
+        printf("malloc: %s\n", strerror(errno));
+        close(new_fd);
         return;
+    }
     n_client->next = NULL;
     n_client->client_sckt = new_fd;
     if (!data->list_clients) {
