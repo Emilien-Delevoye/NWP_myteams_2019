@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <errno.h>
 
 const int nb_connections = 5;
 
@@ -22,10 +23,14 @@ static void setup_port(struct sockaddr_in *serv_addr, int port)
 
 static int start_listening(int fd, struct sockaddr *serv_addr)
 {
-    if (bind(fd, serv_addr, sizeof(struct sockaddr)) < 0)
+    if (bind(fd, serv_addr, sizeof(struct sockaddr)) < 0) {
+        printf("bind: %s\n", strerror(errno));
         return (-1);
-    if (listen(fd, nb_connections) < 0)
+    }
+    if (listen(fd, nb_connections) < 0) {
+        printf("listen: %s\n", strerror(errno));
         return (-1);
+    }
     return (0);
 }
 

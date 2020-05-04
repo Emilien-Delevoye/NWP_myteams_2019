@@ -7,7 +7,15 @@
 
 #include "server.h"
 
-void setup_fd_set(data_server_t data __attribute__((unused)))
+static void setup_write_fd_set(data_server_t *data)
 {
+    FD_SET(data->control_sckt, &data->sckt_pannel[R_FD]);
+}
 
+void setup_fd_set(data_server_t *data)
+{
+    FD_ZERO(&data->sckt_pannel[R_FD]);
+    FD_ZERO(&data->sckt_pannel[W_FD]);
+
+    setup_write_fd_set(data);
 }

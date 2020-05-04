@@ -17,15 +17,17 @@ void help(void)
 int server(char *port_str)
 {
     int port = take_port(port_str);
-    data_server_t data = {.control_sckt = init_ctr_socket(port)};
+    data_server_t data = {.control_sckt = init_ctr_socket(port),
+        .list_clients = NULL};
 
     load_data(&data);
     if (port < 0 || data.control_sckt < 0 || setup_sigcatch() < 0)
         return (84);
     while (server_running()) {
-        setup_fd_set(data);
-        select_fd(data);
-        accept_connections(data);
+        setup_fd_set(&data);
+        if (select_fd(data) < 0)
+            break;
+        accept_connections(&data);
         write_data(data);
         read_data(data);
     }

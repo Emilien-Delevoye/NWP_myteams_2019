@@ -38,7 +38,7 @@ int setup_sigcatch(void)
 bool server_running(void)
 {
     if (memory_running(42) == 1) {
-        puts("\rServeur will shutdown.");
+        puts("\rServer will shutdown.");
         return (false);
     }
     return (true);
