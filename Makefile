@@ -18,7 +18,8 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/data_transfer/write_data.c	\
 			server/src/utils/close_connections.c	\
 			server/src/data_save/load_data.c	\
-			server/src/data_save/save_data.c
+			server/src/data_save/save_data.c	\
+			server/src/control_socket/accept_connections.c
 
 SRC_CLIENT	=	client/src/main.c
 

@@ -31,6 +31,7 @@ void read_data(data_server_t data);
 void save_data(data_server_t data);
 void close_connections(data_server_t data);
 void load_data(data_server_t *data);
+void accept_connections(data_server_t data);
 
 
 /* *** Macros definition *** */
