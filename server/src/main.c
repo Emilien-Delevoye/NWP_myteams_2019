@@ -11,7 +11,7 @@
 void help(void)
 {
     puts("USAGE: ./myteams_server port\n"
-         "\tport\tis the port number on which the server socket listens.\n");
+        "\tport\tis the port number on which the server socket listens.\n");
 }
 
 int server(char *port_str)

@@ -35,11 +35,6 @@ void load_data(data_server_t *data);
 int get_max_fd_fct(data_server_t data);
 
 
-/* *** Macros definition *** */
-#define R_FD 0
-#define W_FD 1
-
-
 /* *** Structures definition *** */
 
 struct client_s {
@@ -54,8 +49,8 @@ struct user_s {
 };
 
 typedef struct data_server_s {
-    int control_sckt; //Listening socket
-    fd_set sckt_r;//sockets tabs for select
+    int control_sckt;
+    fd_set sckt_r;
     fd_set sckt_w;
     struct client_s *list_clients;
     int (*get_max_fd)(data_server_t);
