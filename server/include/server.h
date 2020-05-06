@@ -47,13 +47,41 @@ struct client_s {
 struct user_s {
     char *username;
     uuid_t uuid;
+    struct user_s *next;
+};
+
+struct comment_s {
+    char body[512];
+    struct comment_s *next;
+};
+
+struct thread_s {
+    char name[32];
+    char message[512];
+    uuid_t uuid;
+    struct thread_s *next;
+};
+
+struct channel_s {
+    char channel_name[32];
+    char description[255];
+    uuid_t uuid;
+    struct channel_s *next;
+};
+
+struct team_s {
+    char team_name[32];
+    char description[255];
+    uuid_t uuid;
+    struct team_s *next;
 };
 
 typedef struct data_server_s {
     int control_sckt;
     fd_set sckt_r;
     fd_set sckt_w;
-    struct client_s *list_clients;
+    struct client_s *l_clients;
+    struct team_s *l_teams;
     int (*get_max_fd)(data_server_t);
 } data_server_t;
 

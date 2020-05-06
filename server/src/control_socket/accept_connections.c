@@ -21,7 +21,7 @@
 static void add_new_client(data_server_t *data, int new_fd)
 {
     struct client_s *n_client = malloc(sizeof(struct client_s));
-    struct client_s *current = data->list_clients;
+    struct client_s *current = data->l_clients;
 
     if (!n_client) {
         printf("malloc: %s\n", strerror(errno));
@@ -32,8 +32,8 @@ static void add_new_client(data_server_t *data, int new_fd)
     n_client->user = NULL;
     n_client->to_delete = false;
     n_client->client_sckt = new_fd;
-    if (!data->list_clients) {
-        data->list_clients = n_client;
+    if (!data->l_clients) {
+        data->l_clients = n_client;
     } else {
         while (current->next)
             current = current->next;

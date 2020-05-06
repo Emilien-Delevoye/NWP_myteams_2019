@@ -31,7 +31,7 @@ static void read_client(data_server_t *data __attribute__((unused)),
 
 void read_data(data_server_t *data)
 {
-    for (struct client_s *cur = data->list_clients; cur; cur = cur->next)
+    for (struct client_s *cur = data->l_clients; cur; cur = cur->next)
         if (FD_ISSET(cur->client_sckt, &data->sckt_r))
             read_client(data, cur);
 }

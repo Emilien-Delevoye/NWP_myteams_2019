@@ -12,10 +12,10 @@
 
 void close_connections(data_server_t data)
 {
-    struct client_s *current = data.list_clients;
+    struct client_s *current = data.l_clients;
     struct client_s *to_free;
 
-    for (struct client_s *cur = data.list_clients; cur; cur = cur->next) {
+    for (struct client_s *cur = data.l_clients; cur; cur = cur->next) {
         printf(YELLOW"[INFO] client disconnected\n"DEFAULT);
         close(cur->client_sckt);
     }
