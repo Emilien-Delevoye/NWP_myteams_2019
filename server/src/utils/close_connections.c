@@ -9,7 +9,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/socket.h>
 
 void close_connections(data_server_t data)
 {
