@@ -37,7 +37,7 @@ $(NAME_SERVER):	CFLAGS += -I server/include
 $(NAME_SERVER): $(OBJ_SERVER)
 	gcc -o $(NAME_SERVER) $(OBJ_SERVER)
 
-$(NAME_SERVER):	CFLAGS += -I client/include
+$(NAME_CLIENT):	CFLAGS += -I client/include
 $(NAME_CLIENT): $(OBJ_CLIENT)
 	gcc -o $(NAME_CLIENT) $(OBJ_CLIENT)
 
