@@ -23,7 +23,8 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/utils/get_max_fd.c
 
 SRC_CLIENT	=	client/src/main.c	\
-			client/src/utils/take_port.c
+			client/src/utils/take_port.c	\
+			client/src/connection/connect_client.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 

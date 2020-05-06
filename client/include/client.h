@@ -10,5 +10,11 @@
 
 //Functions
 int take_port(char const *port_str);
+int connect_client(const char *ip, int port);
+
+//Structures
+struct client_s {
+    int sckt;
+};
 
 #endif

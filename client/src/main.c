@@ -7,6 +7,7 @@
 
 #include "client.h"
 #include <stdio.h>
+#include <unistd.h>
 
 void help(void)
 {
@@ -17,6 +18,13 @@ void help(void)
 
 int client(const char *ip, int port)
 {
+    struct client_s client;
+
+    client.sckt = connect_client(ip, port);
+    if (client.sckt < 0)
+        return (84);
+    sleep(4);
+    close(client.sckt);
     return (0);
 }
 
