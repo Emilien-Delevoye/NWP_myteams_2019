@@ -24,11 +24,11 @@ int take_port(char const *);
 int init_ctr_socket(int port);
 bool server_running(void);
 int setup_sigcatch(void);
-void setup_fd_set(data_server_t *data, fd_set *);
-int select_fd(data_server_t data, fd_set *);
-void accept_connections(data_server_t *data, fd_set *);
-void read_data(data_server_t *data, fd_set *);
-void write_data(data_server_t data);
+void setup_fd_set(data_server_t *data);
+int select_fd(data_server_t *data);
+void accept_connections(data_server_t *data);
+void read_data(data_server_t *data);
+void write_data(data_server_t *data);
 void save_data(data_server_t data);
 void close_connections(data_server_t data);
 void load_data(data_server_t *data);
@@ -55,7 +55,7 @@ struct user_s {
 
 typedef struct data_server_s {
     int control_sckt; //Listening socket
-    //sockets tabs for select
+    fd_set sckt_r;//sockets tabs for select
     fd_set sckt_w;
     struct client_s *list_clients;
     int (*get_max_fd)(data_server_t);

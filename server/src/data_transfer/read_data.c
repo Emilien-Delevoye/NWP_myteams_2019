@@ -9,7 +9,8 @@
 #include <unistd.h>
 #include <stdio.h>
 
-static void read_client(data_server_t *data, struct client_s *cur)
+static void read_client(data_server_t *data __attribute__((unused)),
+    struct client_s *cur)
 {
     char buffer[4096] = {0};
 
@@ -17,10 +18,10 @@ static void read_client(data_server_t *data, struct client_s *cur)
     puts(buffer);
 }
 
-void read_data(data_server_t *data, fd_set *read_pannel)
+void read_data(data_server_t *data)
 {
     for (struct client_s *cur = data->list_clients; cur; cur = cur->next) {
-        if (FD_ISSET(cur->client_sckt, read_pannel))
+        if (FD_ISSET(cur->client_sckt, &data->sckt_r))
             read_client(data, cur);
     }
 }

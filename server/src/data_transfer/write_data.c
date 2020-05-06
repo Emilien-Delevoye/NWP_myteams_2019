@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-void write_data(data_server_t data __attribute__((unused)))
+void write_data(data_server_t *data __attribute__((unused)))
 {
 
 }
