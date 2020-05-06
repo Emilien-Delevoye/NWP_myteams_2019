@@ -22,7 +22,9 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/control_socket/accept_connections.c	\
 			server/src/utils/get_max_fd.c
 
-SRC_CLIENT	=	client/src/main.c
+SRC_CLIENT	=	client/src/main.c	\
+			client/src/utils/take_port.c	\
+			client/src/connection/connect_client.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 
@@ -36,7 +38,7 @@ $(NAME_SERVER):	CFLAGS += -I server/include
 $(NAME_SERVER): $(OBJ_SERVER)
 	gcc -o $(NAME_SERVER) $(OBJ_SERVER)
 
-$(NAME_SERVER):	CFLAGS += -I client/include
+$(NAME_CLIENT):	CFLAGS += -I client/include
 $(NAME_CLIENT): $(OBJ_CLIENT)
 	gcc -o $(NAME_CLIENT) $(OBJ_CLIENT)
 
