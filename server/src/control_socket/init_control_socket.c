@@ -5,6 +5,7 @@
 ** Created by emilien
 */
 
+#include "server.h"
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -52,6 +53,6 @@ int init_ctr_socket(int port)
     setup_port(&serv_addr, port);
     if (start_listening(fd, (struct sockaddr *)&serv_addr) < 0)
         return (-1);
-    printf("Listening for connections on port: %d\n", port);
+    printf(CYAN"[START] Listening for connections on port: %d\n"DEFAULT, port);
     return (fd);
 }

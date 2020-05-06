@@ -13,6 +13,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #define NEWADDR (struct sockaddr *)&new_addr
 #define LENADDR (socklen_t *)&len
@@ -53,6 +54,7 @@ void accept_connections(data_server_t *data)
         printf("accept: %s\n", strerror(errno));
         return;
     }
-    printf("New connection on port : %d\n", htonl(new_addr.sin_port));
+    printf(GREEN"[INFO] New connection from : %s:%d\n"DEFAULT,
+        inet_ntoa(new_addr.sin_addr), htons(new_addr.sin_port));
     add_new_client(data, new_fd);
 }
