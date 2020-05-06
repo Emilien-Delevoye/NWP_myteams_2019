@@ -8,4 +8,7 @@
 #ifndef MYTEAMS_CLIENT_H
 #define MYTEAMS_CLIENT_H
 
+//Functions
+int take_port(char const *port_str);
+
 #endif

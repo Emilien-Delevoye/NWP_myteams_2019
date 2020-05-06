@@ -5,6 +5,7 @@
 ** Created by emilien
 */
 
+#include "client.h"
 #include <stdio.h>
 
 void help(void)
@@ -14,11 +15,21 @@ void help(void)
         "port\tis the port number on which the server socket listens\n");
 }
 
-int main(int ac __attribute__((unused)), char **av __attribute__((unused)))
+int client(const char *ip, int port)
 {
+    return (0);
+}
+
+int main(int ac, char **av)
+{
+    int port;
+
     if (ac != 3) {
         help();
         return (84);
     }
-    return (0);
+    port = take_port(av[2]);
+    if (port <= 0)
+        return (84);
+    return (client(av[1], port));
 }
