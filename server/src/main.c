@@ -17,19 +17,21 @@ void help(void)
 int server(char *port_str)
 {
     int port = take_port(port_str);
-    data_server_t data = {.control_sckt = init_ctr_socket(port),
-        .list_clients = NULL, .get_max_fd = get_max_fd_fct};
+    int fd = init_ctr_socket(port);
+    data_server_t data = {.control_sckt = fd, .list_clients = NULL,
+        .get_max_fd = get_max_fd_fct};
+    fd_set read_pannel;
 
     load_data(&data);
     if (port < 0 || data.control_sckt < 0 || setup_sigcatch() < 0)
         return (84);
     while (server_running()) {
-        setup_fd_set(&data);
-        if (select_fd(data) < 0)
+        setup_fd_set(&data, &read_pannel);
+        if (select_fd(data, &read_pannel) < 0)
             break;
-        accept_connections(&data);
+        accept_connections(&data, &read_pannel);
         write_data(data);
-        read_data(data);
+        read_data(&data, &read_pannel);
     }
     close_connections(data);
     save_data(data);

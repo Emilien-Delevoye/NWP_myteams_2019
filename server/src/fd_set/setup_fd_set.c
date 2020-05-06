@@ -6,16 +6,20 @@
 */
 
 #include "server.h"
+#include <stdio.h>
 
-static void setup_write_fd_set(data_server_t *data)
+static void setup_write_fd_set(data_server_t *data, fd_set *read_pannel)
 {
-    FD_SET(data->control_sckt, &data->sckt_pannel[R_FD]);
+    FD_SET(data->control_sckt, read_pannel);
+    for (struct client_s *cur = data->list_clients; cur; cur = cur->next) {
+        printf("this fd will be set : %d\n", cur->client_sckt);
+        FD_SET(cur->client_sckt, read_pannel);
+    }
 }
 
-void setup_fd_set(data_server_t *data)
+void setup_fd_set(data_server_t *data, fd_set *read_pannel)
 {
-    FD_ZERO(&data->sckt_pannel[R_FD]);
-    FD_ZERO(&data->sckt_pannel[W_FD]);
-
-    setup_write_fd_set(data);
+    FD_ZERO(read_pannel);
+    FD_ZERO(&data->sckt_w);
+    setup_write_fd_set(data, read_pannel);
 }

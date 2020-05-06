@@ -9,11 +9,11 @@
 #include <stdio.h>
 #include <errno.h>
 
-int select_fd(data_server_t data)
+int select_fd(data_server_t data, fd_set *read_pannel)
 {
     //FIXME Changer le data.control_sckt + 1 en get_max_fd
-    if (select(data.get_max_fd(data), &data.sckt_pannel[R_FD],
-        &data.sckt_pannel[W_FD], NULL, NULL) < 0) {
+    if (select(get_max_fd_fct(data), read_pannel,
+        &data.sckt_w, NULL, NULL) < 0) {
         if (errno == EINTR)
             puts("\rServer will shutdown.");
         else
