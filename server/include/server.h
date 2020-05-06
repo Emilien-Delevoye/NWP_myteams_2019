@@ -41,6 +41,7 @@ struct client_s {
     int client_sckt;
     struct user_s *user;
     struct client_s *next;
+    bool to_delete;
 };
 
 struct user_s {
