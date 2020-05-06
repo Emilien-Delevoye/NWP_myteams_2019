@@ -20,7 +20,8 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/data_save/load_data.c	\
 			server/src/data_save/save_data.c	\
 			server/src/control_socket/accept_connections.c	\
-			server/src/utils/get_max_fd.c
+			server/src/utils/get_max_fd.c	\
+			server/src/data_transfer/data_work/data_read_packet.c
 
 SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\

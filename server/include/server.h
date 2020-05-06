@@ -33,7 +33,7 @@ void save_data(data_server_t data);
 void close_connections(data_server_t data);
 void load_data(data_server_t *data);
 int get_max_fd_fct(data_server_t data);
-
+void read_buffer(char buffer[4096], data_server_t *data);
 
 /* *** Structures definition *** */
 
