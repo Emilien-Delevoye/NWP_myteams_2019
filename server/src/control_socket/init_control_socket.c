@@ -37,6 +37,7 @@ static int start_listening(int fd, struct sockaddr *serv_addr)
 int init_ctr_socket(int port)
 {
     int fd;
+    int opt = 1;
     struct sockaddr_in serv_addr;
 
     if (port <= 0)
@@ -46,6 +47,8 @@ int init_ctr_socket(int port)
         puts("socket init failed");
         return (-1);
     }
+    if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
+        return (84);
     setup_port(&serv_addr, port);
     if (start_listening(fd, (struct sockaddr *)&serv_addr) < 0)
         return (-1);

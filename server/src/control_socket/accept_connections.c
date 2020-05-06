@@ -12,6 +12,10 @@
 #include <unistd.h>
 #include <errno.h>
 #include <stdio.h>
+#include <netinet/in.h>
+
+#define NEWADDR (struct sockaddr *)&new_addr
+#define LENADDR (socklen_t *)&len
 
 static void add_new_client(data_server_t *data, int new_fd)
 {
@@ -24,6 +28,7 @@ static void add_new_client(data_server_t *data, int new_fd)
         return;
     }
     n_client->next = NULL;
+    n_client->user = NULL;
     n_client->client_sckt = new_fd;
     if (!data->list_clients) {
         data->list_clients = n_client;
@@ -36,14 +41,17 @@ static void add_new_client(data_server_t *data, int new_fd)
 
 void accept_connections(data_server_t *data)
 {
+    struct sockaddr_in new_addr = {0};
+    int len = sizeof(new_addr);
     int new_fd;
 
-    if (!FD_ISSET(data->control_sckt, &data->sckt_pannel[R_FD]))
+    if (!FD_ISSET(data->control_sckt, &data->sckt_r))
         return;
-    new_fd = accept(data->control_sckt, NULL, 0);
+    new_fd = accept(data->control_sckt, NEWADDR, LENADDR);
     if (new_fd < 0) {
         printf("accept: %s\n", strerror(errno));
         return;
     }
+    printf("New connection on port : %d\n", htonl(new_addr.sin_port));
     add_new_client(data, new_fd);
 }

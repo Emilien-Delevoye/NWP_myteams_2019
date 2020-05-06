@@ -6,6 +6,7 @@
 */
 
 #include "server.h"
+#include <stdio.h>
 
 int get_max_fd_fct(data_server_t data)
 {
@@ -16,5 +17,6 @@ int get_max_fd_fct(data_server_t data)
         m_fd = (current->client_sckt > m_fd ? current->client_sckt : m_fd);
         current = current->next;
     }
+    printf("max fd : %d\n", m_fd + 1);
     return (m_fd + 1);
 }

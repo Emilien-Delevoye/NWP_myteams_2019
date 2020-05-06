@@ -6,8 +6,22 @@
 */
 
 #include "server.h"
+#include <unistd.h>
+#include <stdio.h>
 
-void read_data(data_server_t data __attribute__((unused)))
+static void read_client(data_server_t *data __attribute__((unused)),
+    struct client_s *cur)
 {
+    char buffer[4096] = {0};
 
+    read(cur->client_sckt, buffer, sizeof(buffer));
+    puts(buffer);
+}
+
+void read_data(data_server_t *data)
+{
+    for (struct client_s *cur = data->list_clients; cur; cur = cur->next) {
+        if (FD_ISSET(cur->client_sckt, &data->sckt_r))
+            read_client(data, cur);
+    }
 }
