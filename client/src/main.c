@@ -8,6 +8,8 @@
 #include "client.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 
 void help(void)
 {
@@ -16,16 +18,29 @@ void help(void)
         "port\tis the port number on which the server socket listens\n");
 }
 
+int main_loop(struct client_s client)
+{
+    char *buffer = NULL;
+    size_t len = 0;
+
+    while (getline(&buffer, &len, stdin) > 0) {
+
+    }
+    free(buffer);
+    return (0);
+}
+
 int client(const char *ip, int port)
 {
     struct client_s client;
+    int return_val;
 
     client.sckt = connect_client(ip, port);
     if (client.sckt < 0)
         return (84);
-    sleep(4);
+    return_val = main_loop(client);
     close(client.sckt);
-    return (0);
+    return (return_val);
 }
 
 int main(int ac, char **av)
