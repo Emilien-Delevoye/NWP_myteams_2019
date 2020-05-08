@@ -25,7 +25,9 @@ SRC_SERVER	=	server/src/main.c	\
 
 SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\
-			client/src/connection/connect_client.c
+			client/src/connection/connect_client.c	\
+			client/src/parsing/main_parsing.c	\
+			client/src/utils/parsing_utils.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 

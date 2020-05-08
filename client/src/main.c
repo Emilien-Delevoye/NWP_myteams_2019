@@ -21,10 +21,12 @@ void help(void)
 int main_loop(struct client_s client)
 {
     char *buffer = NULL;
+    char **cmd = NULL;
     size_t len = 0;
 
     while (getline(&buffer, &len, stdin) > 0) {
-
+        cmd = parsing(buffer);
+        free_cmd(cmd);
     }
     free(buffer);
     return (0);
