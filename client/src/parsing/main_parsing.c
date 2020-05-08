@@ -9,6 +9,15 @@
 #include <string.h>
 #include <stdlib.h>
 
+void free_cmd(char **cmd)
+{
+    if (!cmd)
+        return;
+    for (int a = 0; cmd[a]; ++a)
+        free(cmd[a]);
+    free(cmd);
+}
+
 char **pars_alloc_tab(char *buffer)
 {
     int nb_args = get_nb_arg(buffer);

@@ -10,12 +10,24 @@
 #include <string.h>
 #include <stdlib.h>
 
+const char *tab_commands[30] = {"/use", "/login", "/logout", "/users", "/user",
+    "/send", "/messages", "/subscribe", "/subscribed", "/unsubscribe", "/use",
+    "/create", "/list", "/info", NULL};
+
+bool check_commands(const char *buf)
+{
+    for (int a = 0; tab_commands[a]; ++a)
+        if (strncmp(buf, tab_commands[a], strlen(tab_commands[a])) == 0)
+            return (true);
+    return (false);
+}
+
 bool not_valid_command(const char *buf)
 {
     int quotes = 0;
     bool not_valid = false;
 
-    if (!buf || buf[0] != '/' || strncmp(buf, "/use", 4) != 0)
+    if (!buf || buf[0] != '/' || !check_commands(buf))
         not_valid = true;
     for (int a = 0; buf[a]; ++a) {
         quotes = (buf[a] == '\"' ? quotes + 1 : quotes);
@@ -73,13 +85,4 @@ char *get_arg(char **buffer)
     output[len_arg] = 0;
     (*buffer) += (len_arg + 1);
     return (output);
-}
-
-void free_cmd(char **cmd)
-{
-    if (!cmd)
-        return;
-    for (int a = 0; cmd[a]; ++a)
-        free(cmd[a]);
-    free(cmd);
 }
