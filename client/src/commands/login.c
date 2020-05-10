@@ -26,5 +26,5 @@ void login(struct client_s *client, char **command)
     buffer[position] = ' ';
     for (int a = 0; command[1][a]; ++a)
         buffer[++position] = command[1][a];
-    write(client->sckt, buffer, sizeof(buffer));
+    add_to_buffer_list(client, buffer);
 }

@@ -27,6 +27,7 @@ int get_nb_arg(const char *buffer);
 char *get_cmd(char **buffer);
 char *get_arg(char **buffer);
 void free_cmd(char **cmd);
+void add_to_buffer_list(struct client_s *client, char buffer[4096]);
 
 void create(struct client_s *client, char **command);
 void login(struct client_s *client, char **command);
