@@ -27,7 +27,18 @@ SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\
 			client/src/connection/connect_client.c	\
 			client/src/parsing/main_parsing.c	\
-			client/src/utils/parsing_utils.c
+			client/src/utils/parsing_utils.c	\
+			client/src/commands/create.c	\
+			client/src/commands/login.c	\
+			client/src/commands/logout.c	\
+			client/src/commands/messages.c	\
+			client/src/commands/send.c	\
+			client/src/commands/subscribe.c	\
+			client/src/commands/subscribed.c	\
+			client/src/commands/unsubscribe.c	\
+			client/src/commands/use.c	\
+			client/src/commands/user.c	\
+			client/src/commands/users.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 
