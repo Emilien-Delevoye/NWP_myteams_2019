@@ -7,7 +7,7 @@
 
 #include "client.h"
 
-void messages(struct client_s *client, char *command)
+void messages(struct client_s *client, char **command)
 {
     (void)client;
     (void)command;

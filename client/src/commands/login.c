@@ -7,7 +7,7 @@
 
 #include "client.h"
 
-void login(struct client_s *client, char *command)
+void login(struct client_s *client, char **command)
 {
     (void)client;
     (void)command;

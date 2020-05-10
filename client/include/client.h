@@ -23,17 +23,17 @@ char *get_cmd(char **buffer);
 char *get_arg(char **buffer);
 void free_cmd(char **cmd);
 
-void create(struct client_s *client, char *command);
-void login(struct client_s *client, char *command);
-void logout(struct client_s *client, char *command);
-void messages(struct client_s *client, char *command);
-void send(struct client_s *client, char *command);
-void subscribe(struct client_s *client, char *command);
-void subscribed(struct client_s *client, char *command);
-void unsubscribe(struct client_s *client, char *command);
-void use(struct client_s *client, char *command);
-void user(struct client_s *client, char *command);
-void users(struct client_s *client, char *command);
+void create(struct client_s *client, char **command);
+void login(struct client_s *client, char **command);
+void logout(struct client_s *client, char **command);
+void messages(struct client_s *client, char **command);
+void send(struct client_s *client, char **command);
+void subscribe(struct client_s *client, char **command);
+void subscribed(struct client_s *client, char **command);
+void unsubscribe(struct client_s *client, char **command);
+void use(struct client_s *client, char **command);
+void user(struct client_s *client, char **command);
+void users(struct client_s *client, char **command);
 
 //Structures
 struct client_s {

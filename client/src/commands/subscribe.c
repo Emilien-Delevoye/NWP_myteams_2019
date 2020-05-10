@@ -7,7 +7,7 @@
 
 #include "client.h"
 
-void subscribe(struct client_s *client, char *command)
+void subscribe(struct client_s *client, char **command)
 {
     (void)client;
     (void)command;
