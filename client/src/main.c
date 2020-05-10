@@ -8,8 +8,6 @@
 #include "client.h"
 #include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
 
 void help(void)
 {
@@ -20,22 +18,16 @@ void help(void)
 
 int main_loop(struct client_s client)
 {
-    char *buffer = NULL;
-    char **cmd = NULL;
-    size_t len = 0;
+    int run_val = 1;
 
-    while (getline(&buffer, &len, stdin) > 0) {
-        cmd = parsing(buffer);
-        call_function(&client, cmd);
-        free_cmd(cmd);
-    }
-    free(buffer);
+    while (run_val == 1)
+        run_val = select_client(&client);
     return (0);
 }
 
 int client(const char *ip, int port)
 {
-    struct client_s client;
+    struct client_s client = {.server_running = true, .to_write = NULL};
     int return_val;
 
     client.sckt = connect_client(ip, port);

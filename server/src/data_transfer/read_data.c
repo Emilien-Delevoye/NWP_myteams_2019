@@ -26,7 +26,7 @@ static void read_client(data_server_t *data __attribute__((unused)),
     if (read_val == 0)
         close_client(cur);
     if (*buffer != 0)
-        read_buffer(buffer, data);
+        read_buffer(buffer, data, cur);
 }
 
 void read_data(data_server_t *data)
