@@ -15,8 +15,12 @@ void read_input(struct client_s *client)
     char **cmd = NULL;
     char *buffer = NULL;
     size_t len = 0;
+    ssize_t val_getline = getline(&buffer, &len, stdin);
 
-    getline(&buffer, &len, stdin);
+    if (val_getline <= 0) {
+        client->server_running = false;
+        return;
+    }
     cmd = parsing(buffer);
     call_function(client, cmd);
     free_cmd(cmd);

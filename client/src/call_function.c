@@ -16,6 +16,8 @@ void (*tab_fct_commands[12])(struct client_s *client, char **command) =
 
 void call_function(struct client_s *client, char **command)
 {
+    if (!command || !command[0])
+        return;
     for (int a = 0; tab_fct_commands[a]; ++a)
         tab_fct_commands[a](client, command);
 }
