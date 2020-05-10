@@ -26,6 +26,7 @@ int main_loop(struct client_s client)
 
     while (getline(&buffer, &len, stdin) > 0) {
         cmd = parsing(buffer);
+        call_function(&client, cmd);
         free_cmd(cmd);
     }
     free(buffer);

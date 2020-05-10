@@ -38,7 +38,8 @@ SRC_CLIENT	=	client/src/main.c	\
 			client/src/commands/unsubscribe.c	\
 			client/src/commands/use.c	\
 			client/src/commands/user.c	\
-			client/src/commands/users.c
+			client/src/commands/users.c	\
+			client/src/call_function.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 

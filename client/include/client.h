@@ -16,6 +16,7 @@ struct client_s;
 int take_port(char const *port_str);
 int connect_client(const char *ip, int port);
 char **parsing(char *buffer);
+void call_function(struct client_s *client, char **command);
 
 bool not_valid_command(const char *buf);
 int get_nb_arg(const char *buffer);
