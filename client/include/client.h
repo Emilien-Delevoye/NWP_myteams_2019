@@ -47,11 +47,11 @@ struct write_data_s {
 
 //Structures
 struct client_s {
+    int sckt;
     fd_set fd_rd;
     fd_set fd_wr;
     bool server_running;
     struct write_data_s *to_write;
-    int sckt;
 };
 
 #define DOMINIQUE quotes != 0 && quotes % 2 == 0 && buf[a] != ' ' && \
