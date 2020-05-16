@@ -33,6 +33,7 @@ int setup_sigcatch(void)
     struct sigaction sig_act = {0};
 
     sig_act.sa_handler = sig_handler;
+    signal(SIGPIPE, SIG_IGN);
     return (sigaction(SIGINT, &sig_act, NULL));
 }
 

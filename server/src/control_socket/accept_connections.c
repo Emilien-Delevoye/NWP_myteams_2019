@@ -30,6 +30,7 @@ static void add_new_client(data_server_t *data, int new_fd)
     }
     n_client->next = NULL;
     n_client->user = NULL;
+    n_client->to_write = NULL;
     n_client->to_delete = false;
     n_client->client_sckt = new_fd;
     if (!data->l_clients) {

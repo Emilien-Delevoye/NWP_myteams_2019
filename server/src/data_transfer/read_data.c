@@ -20,7 +20,7 @@ static void close_client(struct client_s *to_close)
 static void read_client(data_server_t *data __attribute__((unused)),
     struct client_s *cur)
 {
-    char buffer[4096] = {0};
+    char buffer[BF_S] = {0};
     int read_val = read(cur->client_sckt, buffer, sizeof(buffer));
 
     if (read_val == 0)

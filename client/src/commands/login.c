@@ -12,7 +12,7 @@
 
 void login(struct client_s *client, char **command)
 {
-    char buffer[4096] = {0};
+    char buffer[BF_S] = {0};
     int position = -1;
 
     if (strcmp(command[0], "/login") != 0)
