@@ -21,7 +21,7 @@ struct write_data_s *get_prev_write(struct client_s *client)
     return (cur);
 }
 
-void add_to_buffer_list(struct client_s *client, char buffer[4096])
+void add_to_buffer_list(struct client_s *client, char buffer[BF_S])
 {
     struct write_data_s *to_write = malloc(sizeof(struct write_data_s));
     struct write_data_s *prev = get_prev_write(client);
@@ -43,7 +43,7 @@ void write_server(struct client_s *client)
     int len_wr;
 
     len_wr = write(client->sckt, to_write->packet, sizeof(to_write->packet));
-    if (len_wr != 4096)
+    if (len_wr != BF_S)
         return;
     client->to_write = to_write->next;
     free(to_write);

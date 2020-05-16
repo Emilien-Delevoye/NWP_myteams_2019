@@ -13,6 +13,7 @@
 #include <sys/select.h>
 #include <uuid/uuid.h>
 
+#define BF_S 2048
 
 /* *** Pre-structure def *** */
 struct user_s;
@@ -34,15 +35,21 @@ void save_data(data_server_t data);
 void close_connections(data_server_t data);
 void load_data(data_server_t *data);
 int get_max_fd_fct(data_server_t data);
-void read_buffer(char buffer[4096], data_server_t *data, struct client_s *cur);
-void add_to_buffer_list(data_server_t *client, char buffer[4096]);
+void read_buffer(char buffer[BF_S], data_server_t *data, struct client_s *cur);
+void add_to_buffer_list(struct client_s *client, char buffer[BF_S]);
 
 /* *** Structures definition *** */
+
+struct write_data_s {
+    char packet[BF_S];
+    struct write_data_s *next;
+};
 
 struct client_s {
     int client_sckt;
     struct user_s *user;
     struct client_s *next;
+    struct write_data_s *to_write;
     bool to_delete;
 };
 
@@ -78,18 +85,12 @@ struct team_s {
     struct team_s *next;
 };
 
-struct write_data_s {
-    char packet[4096];
-    struct write_data_s *next;
-};
-
 typedef struct data_server_s {
     fd_set sckt_r;
     fd_set sckt_w;
     int control_sckt;
     struct team_s *l_teams;
     struct client_s *l_clients;
-    struct write_data_s *to_write;
     int (*get_max_fd)(data_server_t);
 } data_server_t;
 

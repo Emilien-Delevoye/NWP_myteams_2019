@@ -12,6 +12,8 @@
 #include <sys/select.h>
 struct client_s;
 
+#define BF_S 2048
+
 //Functions
 int take_port(char const *port_str);
 int connect_client(const char *ip, int port);
@@ -27,7 +29,7 @@ int get_nb_arg(const char *buffer);
 char *get_cmd(char **buffer);
 char *get_arg(char **buffer);
 void free_cmd(char **cmd);
-void add_to_buffer_list(struct client_s *client, char buffer[4096]);
+void add_to_buffer_list(struct client_s *client, char buffer[BF_S]);
 
 void create(struct client_s *client, char **command);
 void login(struct client_s *client, char **command);
@@ -42,7 +44,7 @@ void user(struct client_s *client, char **command);
 void users(struct client_s *client, char **command);
 
 struct write_data_s {
-    char packet[4096];
+    char packet[BF_S];
     struct write_data_s *next;
 };
 

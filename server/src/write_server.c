@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static struct write_data_s *get_prev_write(data_server_t *client)
+static struct write_data_s *get_prev_write(struct client_s *client)
 {
     struct write_data_s *cur = client->to_write;
 
@@ -20,7 +20,7 @@ static struct write_data_s *get_prev_write(data_server_t *client)
     return (cur);
 }
 
-void add_to_buffer_list(data_server_t *client, char buffer[4096])
+void add_to_buffer_list(struct client_s *client, char buffer[BF_S])
 {
     struct write_data_s *to_write = malloc(sizeof(struct write_data_s));
     struct write_data_s *prev = get_prev_write(client);

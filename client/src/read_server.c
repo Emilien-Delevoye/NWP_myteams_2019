@@ -28,7 +28,7 @@ void read_input(struct client_s *client)
 
 void read_server(struct client_s *client)
 {
-    char buffer[4096] = {0};
+    char buffer[BF_S] = {0};
     int size_read = read(client->sckt, buffer, sizeof(buffer));
 
     if (size_read == 0) {
