@@ -18,7 +18,8 @@ int server(char *port_str)
 {
     int port = take_port(port_str);
     data_server_t data = {.control_sckt = init_ctr_socket(port),
-        .l_clients = NULL, .l_teams = NULL, .get_max_fd = get_max_fd_fct};
+        .l_clients = NULL, .l_teams = NULL, .get_max_fd = get_max_fd_fct,
+        .to_write = NULL};
 
     if (port < 0 || data.control_sckt < 0 || setup_sigcatch() < 0)
         return (84);
