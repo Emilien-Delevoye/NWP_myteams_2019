@@ -1,0 +1,27 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - name: make
+        run: make
+      - name: make clean
+        run: make clean
+      - name: make fclean
+        run: make ; make fclean
+      - name: make re
+        run: make re
+  update_remote:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - name: clone
+        run: git clone git@github.com:/Emilien-Delevoye/NWP_myteams_2019
+      - name: add remote
+        run: cd NWP_myteams_2019 ; git remote add blih git@git.epitech.eu:/emilien.delevoye@epitech.eu/NWP_myteams_2019
+      - name: push
+        run: cd NWP_myteams_2019 ; git push blih

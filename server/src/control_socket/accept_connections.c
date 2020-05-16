@@ -13,6 +13,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #define NEWADDR (struct sockaddr *)&new_addr
 #define LENADDR (socklen_t *)&len
@@ -20,7 +21,7 @@
 static void add_new_client(data_server_t *data, int new_fd)
 {
     struct client_s *n_client = malloc(sizeof(struct client_s));
-    struct client_s *current = data->list_clients;
+    struct client_s *current = data->l_clients;
 
     if (!n_client) {
         printf("malloc: %s\n", strerror(errno));
@@ -31,8 +32,8 @@ static void add_new_client(data_server_t *data, int new_fd)
     n_client->user = NULL;
     n_client->to_delete = false;
     n_client->client_sckt = new_fd;
-    if (!data->list_clients) {
-        data->list_clients = n_client;
+    if (!data->l_clients) {
+        data->l_clients = n_client;
     } else {
         while (current->next)
             current = current->next;
@@ -53,6 +54,7 @@ void accept_connections(data_server_t *data)
         printf("accept: %s\n", strerror(errno));
         return;
     }
-    printf("New connection on port : %d\n", htonl(new_addr.sin_port));
+    printf(GREEN"[INFO] New connection from : %s:%d\n"DEFAULT,
+        inet_ntoa(new_addr.sin_addr), htons(new_addr.sin_port));
     add_new_client(data, new_fd);
 }

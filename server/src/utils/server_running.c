@@ -5,6 +5,7 @@
 ** Created by emilien
 */
 
+#include "server.h"
 #include <stdbool.h>
 #include <signal.h>
 #include <unistd.h>
@@ -38,7 +39,7 @@ int setup_sigcatch(void)
 bool server_running(void)
 {
     if (memory_running(42) == 1) {
-        puts("\rServer will shutdown.");
+        puts(BLINK RED"\r[STOP] Server will shutdown."DEFAULT);
         return (false);
     }
     return (true);

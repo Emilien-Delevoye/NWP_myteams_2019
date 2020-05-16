@@ -10,21 +10,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static void remove_elem(data_server_t *data, struct client_s *cur,
-    struct client_s *pre)
-{
-    printf("client closed %d\n", cur->client_sckt);
-    if (pre == NULL) {
-        data->list_clients = cur->next;
-        free(cur);
-    } else {
-        pre->next = cur->next;
-        free(cur);
-    }
-}
-
 static void close_client(struct client_s *to_close)
 {
+    printf(YELLOW"[INFO] client disconnected\n"DEFAULT);
     close(to_close->client_sckt);
     to_close->to_delete = true;
 }
@@ -37,12 +25,13 @@ static void read_client(data_server_t *data __attribute__((unused)),
 
     if (read_val == 0)
         close_client(cur);
-    puts(buffer);
+    if (*buffer != 0)
+        read_buffer(buffer, data, cur);
 }
 
 void read_data(data_server_t *data)
 {
-    for (struct client_s *cur = data->list_clients; cur; cur = cur->next)
+    for (struct client_s *cur = data->l_clients; cur; cur = cur->next)
         if (FD_ISSET(cur->client_sckt, &data->sckt_r))
             read_client(data, cur);
 }
