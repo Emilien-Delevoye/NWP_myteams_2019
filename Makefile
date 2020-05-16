@@ -21,7 +21,8 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/data_save/save_data.c	\
 			server/src/control_socket/accept_connections.c	\
 			server/src/utils/get_max_fd.c	\
-			server/src/data_transfer/data_work/data_read_packet.c
+			server/src/data_transfer/data_work/data_read_packet.c	\
+			server/src/write_server.c
 
 SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\
@@ -52,11 +53,11 @@ CFLAGS  += -W -Wall -Wextra -pedantic -ansi -std=gnu11
 
 all:    $(NAME_SERVER) $(NAME_CLIENT)
 
-$(NAME_SERVER):	CFLAGS += -I server/include
+$(NAME_SERVER):	CFLAGS += -I server/include -I libs/myteams
 $(NAME_SERVER): $(OBJ_SERVER)
-	gcc -o $(NAME_SERVER) $(OBJ_SERVER)
+	gcc -o $(NAME_SERVER) $(OBJ_SERVER) -Llibs/myteams -lmyteams
 
-$(NAME_CLIENT):	CFLAGS += -I client/include
+$(NAME_CLIENT):	CFLAGS += -I client/include -I libs/myteams
 $(NAME_CLIENT): $(OBJ_CLIENT)
 	gcc -o $(NAME_CLIENT) $(OBJ_CLIENT)
 
