@@ -39,6 +39,10 @@ void read_buffer(char buffer[BF_S], data_server_t *data, struct client_s *cur);
 void add_to_buffer_list(struct client_s *client, char buffer[BF_S]);
 
 void login(char [BF_S], data_server_t *, struct client_s *);
+void logout(char [BF_S], data_server_t *, struct client_s *);
+
+void create_login_buffer(char buffer[BF_S], struct user_s *cur);
+
 /* *** Structures definition *** */
 
 struct write_data_s {

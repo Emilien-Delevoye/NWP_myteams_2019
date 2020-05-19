@@ -23,7 +23,9 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/utils/get_max_fd.c	\
 			server/src/data_transfer/data_work/data_read_packet.c	\
 			server/src/write_server.c	\
-			server/src/commands/login.c
+			server/src/commands/login.c	\
+			server/src/commands/logout.c	\
+			server/src/commands/create_login_buffer.c
 
 SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\
@@ -44,7 +46,8 @@ SRC_CLIENT	=	client/src/main.c	\
 			client/src/call_function.c	\
 			client/src/select_client.c	\
 			client/src/read_server.c	\
-			client/src/write_server.c
+			client/src/write_server.c	\
+			client/src/server_commands/login.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 
@@ -60,7 +63,7 @@ $(NAME_SERVER): $(OBJ_SERVER)
 
 $(NAME_CLIENT):	CFLAGS += -I client/include -I libs/myteams
 $(NAME_CLIENT): $(OBJ_CLIENT)
-	gcc -o $(NAME_CLIENT) $(OBJ_CLIENT)
+	gcc -o $(NAME_CLIENT) $(OBJ_CLIENT) -Llibs/myteams -lmyteams -luuid
 
 debug:  CFLAGS += -g
 debug:  all

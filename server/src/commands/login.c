@@ -29,7 +29,7 @@ static struct user_s *get_existing_user(data_server_t *data,
 {
     for (struct user_s *cur = data->l_users; cur; cur = cur->next) {
         if (cur->username && strcmp(cur->username, username) == 0) {
-            server_event_user_loaded((const char *)cur->uuid, cur->username);
+            server_event_user_logged_in((const char *)cur->uuid);
             return (cur);
         }
     }
@@ -70,7 +70,7 @@ static struct user_s *add_user(data_server_t *data, char *username)
 void login(char buffer[BF_S], data_server_t *data, struct client_s *client)
 {
     char *name = extract_name(buffer);
-    struct user_s *user = NULL;
+    char out_buf[BF_S] = {0};
 
     if (client->user) {
         puts(YELLOW"[INFO] User already logged in"DEFAULT);
@@ -79,11 +79,12 @@ void login(char buffer[BF_S], data_server_t *data, struct client_s *client)
         puts(RED"[ERROR] Malloc error: extract_name()"DEFAULT);
         return;
     }
-    user = get_existing_user(data, name);
-    if (!user)
-        user = add_user(data, name);
-    if (!user)
+    client->user = get_existing_user(data, name);
+    if (!client->user)
+        client->user = add_user(data, name);
+    if (!client->user)
         return;
-    client->user = user;
+    create_login_buffer(out_buf, client->user);
+    add_to_buffer_list(client, out_buf);
     printf(GREEN"[INFO] Connexion utilisateur : %s\n"DEFAULT, name);
 }

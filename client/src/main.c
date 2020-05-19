@@ -27,7 +27,8 @@ int main_loop(struct client_s client)
 
 int client(const char *ip, int port)
 {
-    struct client_s client = {.server_running = true, .to_write = NULL};
+    struct client_s client = {.server_running = true, .to_write = NULL,
+        .user = {.username = {0}, .uuid = {0}}};
     int return_val;
 
     client.sckt = connect_client(ip, port);
