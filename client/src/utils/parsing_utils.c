@@ -66,6 +66,9 @@ char *get_cmd(char **buffer)
         output[a] = (*buffer)[a];
     output[len] = 0;
     *buffer += len;
+    for (int a = 0; output[a]; ++a)
+        if (output[a] == '\n')
+            output[a] = 0;
     return (output);
 }
 

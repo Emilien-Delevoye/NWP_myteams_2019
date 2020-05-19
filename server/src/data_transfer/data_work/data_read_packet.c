@@ -8,11 +8,10 @@
 #include "server.h"
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
-const char *command[10] = {"/login", NULL};
+const char *command[10] = {"/login", "/logout", NULL};
 void (*fct[10])(char [BF_S], data_server_t *, struct client_s *) =
-    {login, NULL};
+    {login, logout, NULL};
 
 void interpret_cmd(char buf[BF_S], data_server_t *data, struct client_s *cur)
 {
