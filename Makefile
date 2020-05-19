@@ -47,7 +47,8 @@ SRC_CLIENT	=	client/src/main.c	\
 			client/src/select_client.c	\
 			client/src/read_server.c	\
 			client/src/write_server.c	\
-			client/src/server_commands/login.c
+			client/src/server_commands/login.c	\
+			client/src/server_commands/logout.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 

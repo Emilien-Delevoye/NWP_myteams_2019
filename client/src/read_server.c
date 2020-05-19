@@ -11,7 +11,7 @@
 #include <unistd.h>
 
 void (*fct[10])(char [BF_S], struct client_s *) =
-    {login_server, NULL};
+    {login_server, logout_server, NULL};
 
 void read_input(struct client_s *client)
 {
