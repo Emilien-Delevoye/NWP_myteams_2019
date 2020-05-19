@@ -8,8 +8,11 @@
 #ifndef MYTEAMS_CLIENT_H
 #define MYTEAMS_CLIENT_H
 
+#include "loggin_client.h"
 #include <stdbool.h>
 #include <sys/select.h>
+#include <uuid/uuid.h>
+
 struct client_s;
 
 #define BF_S 2048
@@ -43,14 +46,23 @@ void use(struct client_s *client, char **command);
 void user(struct client_s *client, char **command);
 void users(struct client_s *client, char **command);
 
+void login_server(char read_buf[BF_S], struct client_s *);
+
 struct write_data_s {
     char packet[BF_S];
     struct write_data_s *next;
 };
 
 //Structures
+
+struct user_s {
+    char username[32];
+    uuid_t uuid;
+};
+
 struct client_s {
     int sckt;
+    struct user_s user;
     fd_set fd_rd;
     fd_set fd_wr;
     bool server_running;

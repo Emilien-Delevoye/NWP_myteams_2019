@@ -46,7 +46,8 @@ SRC_CLIENT	=	client/src/main.c	\
 			client/src/call_function.c	\
 			client/src/select_client.c	\
 			client/src/read_server.c	\
-			client/src/write_server.c
+			client/src/write_server.c	\
+			client/src/server_commands/login.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 
@@ -62,7 +63,7 @@ $(NAME_SERVER): $(OBJ_SERVER)
 
 $(NAME_CLIENT):	CFLAGS += -I client/include -I libs/myteams
 $(NAME_CLIENT): $(OBJ_CLIENT)
-	gcc -o $(NAME_CLIENT) $(OBJ_CLIENT)
+	gcc -o $(NAME_CLIENT) $(OBJ_CLIENT) -Llibs/myteams -lmyteams -luuid
 
 debug:  CFLAGS += -g
 debug:  all

@@ -10,6 +10,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
+void (*fct[10])(char [BF_S], struct client_s *) =
+    {login_server, NULL};
+
 void read_input(struct client_s *client)
 {
     char **cmd = NULL;
@@ -36,5 +39,6 @@ void read_server(struct client_s *client)
         puts(RED"[STOP] Server is closed"DEFAULT);
         return;
     }
-    printf("Buffer read : %s\n", buffer);
+    for (int a = 0; fct[a]; ++a)
+        fct[a](buffer, client);
 }
