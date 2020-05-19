@@ -38,6 +38,7 @@ int get_max_fd_fct(data_server_t data);
 void read_buffer(char buffer[BF_S], data_server_t *data, struct client_s *cur);
 void add_to_buffer_list(struct client_s *client, char buffer[BF_S]);
 
+void login(char [BF_S], data_server_t *, struct client_s *);
 /* *** Structures definition *** */
 
 struct write_data_s {
@@ -91,6 +92,7 @@ typedef struct data_server_s {
     int control_sckt;
     struct team_s *l_teams;
     struct client_s *l_clients;
+    struct user_s *l_users;
     int (*get_max_fd)(data_server_t);
 } data_server_t;
 

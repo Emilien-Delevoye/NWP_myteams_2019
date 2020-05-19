@@ -7,3 +7,5 @@ vgcore*
 myteams_cli
 myteams_server
 test_input
+/.bash_history
+/server_output

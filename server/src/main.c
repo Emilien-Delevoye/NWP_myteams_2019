@@ -7,6 +7,7 @@
 
 #include "server.h"
 #include <stdio.h>
+#include <unistd.h>
 
 void help(void)
 {

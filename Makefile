@@ -22,7 +22,8 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/control_socket/accept_connections.c	\
 			server/src/utils/get_max_fd.c	\
 			server/src/data_transfer/data_work/data_read_packet.c	\
-			server/src/write_server.c
+			server/src/write_server.c	\
+			server/src/commands/login.c
 
 SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\
@@ -55,7 +56,7 @@ all:    $(NAME_SERVER) $(NAME_CLIENT)
 
 $(NAME_SERVER):	CFLAGS += -I server/include -I libs/myteams
 $(NAME_SERVER): $(OBJ_SERVER)
-	gcc -o $(NAME_SERVER) $(OBJ_SERVER) -Llibs/myteams -lmyteams
+	gcc -o $(NAME_SERVER) $(OBJ_SERVER) -Llibs/myteams -lmyteams -luuid
 
 $(NAME_CLIENT):	CFLAGS += -I client/include -I libs/myteams
 $(NAME_CLIENT): $(OBJ_CLIENT)
