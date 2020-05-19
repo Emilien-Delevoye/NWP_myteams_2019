@@ -29,7 +29,7 @@ static struct user_s *get_existing_user(data_server_t *data,
 {
     for (struct user_s *cur = data->l_users; cur; cur = cur->next) {
         if (cur->username && strcmp(cur->username, username) == 0) {
-            server_event_user_loaded((const char *)cur->uuid, cur->username);
+            server_event_user_logged_in((const char *)cur->uuid);
             return (cur);
         }
     }
