@@ -22,7 +22,8 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/control_socket/accept_connections.c	\
 			server/src/utils/get_max_fd.c	\
 			server/src/data_transfer/data_work/data_read_packet.c	\
-			server/src/write_server.c
+			server/src/write_server.c	\
+			server/src/commands/login.c
 
 SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\
