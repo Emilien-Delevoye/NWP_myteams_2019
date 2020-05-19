@@ -56,7 +56,7 @@ all:    $(NAME_SERVER) $(NAME_CLIENT)
 
 $(NAME_SERVER):	CFLAGS += -I server/include -I libs/myteams
 $(NAME_SERVER): $(OBJ_SERVER)
-	gcc -o $(NAME_SERVER) $(OBJ_SERVER) -Llibs/myteams -lmyteams
+	gcc -o $(NAME_SERVER) $(OBJ_SERVER) -Llibs/myteams -lmyteams -luuid
 
 $(NAME_CLIENT):	CFLAGS += -I client/include -I libs/myteams
 $(NAME_CLIENT): $(OBJ_CLIENT)
