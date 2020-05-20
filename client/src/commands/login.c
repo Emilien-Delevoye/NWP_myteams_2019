@@ -8,7 +8,6 @@
 #include "client.h"
 #include <string.h>
 #include <stdio.h>
-#include <unistd.h>
 
 void login(struct client_s *client, char **command)
 {
