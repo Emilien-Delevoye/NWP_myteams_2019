@@ -16,4 +16,5 @@ void logout_server(char read_buf[BF_S], struct client_s *cli)
     memcpy(cli->user.username, read_buf + 8 + sizeof(cli->user.uuid),
         sizeof(cli->user.username));
     client_event_loggedout((const char *)cli->user.uuid, cli->user.username);
+    cli->server_running = false;
 }
