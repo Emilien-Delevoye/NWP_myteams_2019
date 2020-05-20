@@ -27,4 +27,3 @@ void users(struct client_s *client, char **command)
         buffer[++position] = command[1][a];
     add_to_buffer_list(client, buffer);
 }
-}
