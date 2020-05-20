@@ -18,6 +18,17 @@
 #define NEWADDR (struct sockaddr *)&new_addr
 #define LENADDR (socklen_t *)&len
 
+static void init_client(struct client_s *n_client)
+{
+    n_client->next = NULL;
+    n_client->user = NULL;
+    n_client->team = NULL;
+    n_client->channel = NULL;
+    n_client->thread = NULL;
+    n_client->to_write = NULL;
+    n_client->to_delete = false;
+}
+
 static void add_new_client(data_server_t *data, int new_fd)
 {
     struct client_s *n_client = malloc(sizeof(struct client_s));
@@ -28,10 +39,7 @@ static void add_new_client(data_server_t *data, int new_fd)
         close(new_fd);
         return;
     }
-    n_client->next = NULL;
-    n_client->user = NULL;
-    n_client->to_write = NULL;
-    n_client->to_delete = false;
+    init_client(n_client);
     n_client->client_sckt = new_fd;
     if (!data->l_clients) {
         data->l_clients = n_client;

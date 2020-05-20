@@ -13,7 +13,7 @@ void create_log_buffer(char buffer[BF_S], struct user_s *cur, char *cmd)
     size_t len = strlen(cmd);
 
     memset(buffer, 0, BF_S);
-    for (int a = 0; a < len; ++a)
+    for (size_t a = 0; a < len; ++a)
         buffer[a] = cmd[a];
     buffer[len] = ' ';
     for (size_t a = 0; a < sizeof(cur->uuid); ++a)

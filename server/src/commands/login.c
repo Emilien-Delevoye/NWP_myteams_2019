@@ -61,6 +61,7 @@ static struct user_s *add_user(data_server_t *data, char *username)
     new->next = NULL;
     new->username = username;
     uuid_generate_random(new->uuid);
+    remove_pipe_uuid(new->uuid);
     printf(GREEN"[INFO] New user \"%s\" created\n"DEFAULT, username);
     add_to_user_list(data, new);
     server_event_user_created((const char *)new->uuid, new->username);

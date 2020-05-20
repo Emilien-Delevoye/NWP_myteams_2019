@@ -14,6 +14,7 @@
 #include <uuid/uuid.h>
 
 #define BF_S 2048
+#define U_TC (const char *)
 
 /* *** Pre-structure def *** */
 struct user_s;
@@ -26,6 +27,7 @@ int take_port(char const *);
 int init_ctr_socket(int port);
 bool server_running(void);
 int setup_sigcatch(void);
+void remove_pipe_uuid(uuid_t uuid);
 void setup_fd_set(data_server_t *data);
 int select_fd(data_server_t *data);
 void accept_connections(data_server_t *data);
@@ -40,6 +42,7 @@ void add_to_buffer_list(struct client_s *client, char buffer[BF_S]);
 
 void login(char [BF_S], data_server_t *, struct client_s *);
 void logout(char [BF_S], data_server_t *, struct client_s *);
+void create(char [BF_S], data_server_t *, struct client_s *);
 
 //void create_login_buffer(char buffer[BF_S], struct user_s *cur);
 void create_log_buffer(char buffer[BF_S], struct user_s *cur, char *cmd);
@@ -56,6 +59,9 @@ struct client_s {
     struct user_s *user;
     struct client_s *next;
     struct write_data_s *to_write;
+    struct team_s *team;
+    struct channel_s *channel;
+    struct thread_s *thread;
     bool to_delete;
 };
 
@@ -85,8 +91,8 @@ struct channel_s {
 };
 
 struct team_s {
-    char team_name[32];
-    char description[255];
+    char name[32];
+    char desc[255];
     uuid_t uuid;
     struct team_s *next;
 };

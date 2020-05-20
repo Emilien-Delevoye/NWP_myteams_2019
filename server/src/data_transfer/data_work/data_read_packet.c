@@ -9,9 +9,10 @@
 #include <stdio.h>
 #include <string.h>
 
-const char *command[10] = {"/login", "/logout", NULL};
+const char *command[10] = {"/login", "/logout", "/create", NULL};
+
 void (*fct[10])(char [BF_S], data_server_t *, struct client_s *) =
-    {login, logout, NULL};
+    {login, logout, create, NULL};
 
 void interpret_cmd(char buf[BF_S], data_server_t *data, struct client_s *cur)
 {
