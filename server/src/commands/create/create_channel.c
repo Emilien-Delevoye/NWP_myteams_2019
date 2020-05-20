@@ -34,7 +34,8 @@ void init_channel(char *n[3], struct channel_s *new,
     strncpy(new->desc, n[2], (len_2 > 255 ? 255 : len_2));
     uuid_generate_random(new->uuid);
     remove_pipe_uuid(new->uuid);
-    server_event_team_created(U_TC new->uuid, new->name, U_TC cli->user->uuid);
+    server_event_channel_created(U_TC cli->team->uuid, U_TC new->uuid,
+        new->name);
     ping_client_n_channel(new, cli);
     new->next = NULL;
 }
