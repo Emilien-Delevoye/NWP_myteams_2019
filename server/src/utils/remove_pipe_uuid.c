@@ -9,7 +9,7 @@
 
 void remove_pipe_uuid(uuid_t uuid)
 {
-    for (int a = 0; a < sizeof(uuid_t); ++a)
+    for (size_t a = 0; a < sizeof(uuid_t); ++a)
         if (uuid[a] == '|')
             uuid = 0;
 }

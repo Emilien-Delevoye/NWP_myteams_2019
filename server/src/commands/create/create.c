@@ -14,13 +14,12 @@ static void ping_client_n_team(struct team_s *new, struct client_s *cli)
 {
     char buffer[BF_S] = {0};
 
-    strncpy(buffer, "n_team|", 7);
-    strncpy(buffer + 7, (const char *)new->uuid, sizeof(new->uuid));
-    strncpy(buffer + 7 + sizeof(new->uuid), "|", 1);
-    strncpy(buffer + 8 + sizeof(new->uuid), new->name, sizeof(new->name));
-    strncpy(buffer + 8 + sizeof(new->uuid) + sizeof(new->name), "|", 1);
-    strncpy(buffer + 9 + sizeof(new->uuid) + sizeof(new->name), new->desc,
-        sizeof(new->desc));
+    strcpy(buffer, "n_team|");
+    strcpy(buffer + 7, (const char *)new->uuid);
+    strcpy(buffer + 7 + sizeof(new->uuid), "|");
+    strcpy(buffer + 8 + sizeof(new->uuid), new->name);
+    strcpy(buffer + 8 + sizeof(new->uuid) + sizeof(new->name), "|");
+    strcpy(buffer + 9 + sizeof(new->uuid) + sizeof(new->name), new->desc);
     write(1, buffer, BF_S);
     add_to_buffer_list(cli, buffer);
 }
