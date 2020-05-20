@@ -45,6 +45,7 @@ void add_to_buffer_list(struct client_s *client, char buffer[BF_S]);
 void login(char [BF_S], data_server_t *, struct client_s *);
 void logout(char [BF_S], data_server_t *, struct client_s *);
 void create(char [BF_S], data_server_t *, struct client_s *);
+void use(char [BF_S], data_server_t *, struct client_s *);
 
 void create_log_buffer(char buffer[BF_S], struct user_s *cur, char *cmd);
 void init_channel(char *[3], struct channel_s *, struct client_s *);

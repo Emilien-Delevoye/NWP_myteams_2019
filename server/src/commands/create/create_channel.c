@@ -9,6 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 
+//FIXME -> Changer cette fonction pour envoyer les bonnes informations au cli
 static void ping_client_n_channel(struct channel_s *new, struct client_s *cli)
 {
     char buffer[BF_S] = {0};
