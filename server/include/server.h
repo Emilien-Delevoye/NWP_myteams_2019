@@ -19,6 +19,8 @@
 /* *** Pre-structure def *** */
 struct user_s;
 struct client_s;
+struct channel_s;
+struct team_s;
 typedef struct data_server_s data_server_t;
 
 
@@ -44,9 +46,9 @@ void login(char [BF_S], data_server_t *, struct client_s *);
 void logout(char [BF_S], data_server_t *, struct client_s *);
 void create(char [BF_S], data_server_t *, struct client_s *);
 
-//void create_login_buffer(char buffer[BF_S], struct user_s *cur);
 void create_log_buffer(char buffer[BF_S], struct user_s *cur, char *cmd);
-
+void init_channel(char *[3], struct channel_s *, struct client_s *);
+void init_team(char *n[3], struct team_s *, struct client_s *);
 /* *** Structures definition *** */
 
 struct write_data_s {
@@ -84,9 +86,10 @@ struct thread_s {
 };
 
 struct channel_s {
-    char channel_name[32];
-    char description[255];
+    char name[32];
+    char desc[255];
     uuid_t uuid;
+    struct thread_s *threads;
     struct channel_s *next;
 };
 
@@ -94,6 +97,7 @@ struct team_s {
     char name[32];
     char desc[255];
     uuid_t uuid;
+    struct channel_s *channels;
     struct team_s *next;
 };
 
