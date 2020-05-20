@@ -29,12 +29,13 @@ void init_channel(char *n[3], struct channel_s *new,
 {
     size_t len_1 = strlen(n[1]);
     size_t len_2 = strlen(n[2]);
+    uuid_t uuid;
 
     memset(new, 0, sizeof(struct channel_s));
     strncpy(new->name, n[1], (len_1 > 32 ? 32 : len_1));
     strncpy(new->desc, n[2], (len_2 > 255 ? 255 : len_2));
-    uuid_generate_random(new->uuid);
-    remove_pipe_uuid(new->uuid);
+    uuid_generate_random(uuid);
+    uuid_unparse(uuid, new->uuid);
     server_event_channel_created(U_TC cli->team->uuid, U_TC new->uuid,
         new->name);
     ping_client_n_channel(new, cli);

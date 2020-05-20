@@ -15,6 +15,7 @@
 
 #define BF_S 2048
 #define U_TC (const char *)
+#define LUID 36
 
 /* *** Pre-structure def *** */
 struct user_s;
@@ -70,7 +71,7 @@ struct client_s {
 
 struct user_s {
     char *username;
-    uuid_t uuid;
+    char uuid[LUID];
     struct user_s *next;
 };
 
@@ -82,14 +83,14 @@ struct comment_s {
 struct thread_s {
     char name[32];
     char message[512];
-    uuid_t uuid;
+    char uuid[LUID];
     struct thread_s *next;
 };
 
 struct channel_s {
     char name[32];
     char desc[255];
-    uuid_t uuid;
+    char uuid[LUID];
     struct thread_s *threads;
     struct channel_s *next;
 };
@@ -97,7 +98,7 @@ struct channel_s {
 struct team_s {
     char name[32];
     char desc[255];
-    uuid_t uuid;
+    char uuid[LUID];
     struct channel_s *channels;
     struct team_s *next;
 };
