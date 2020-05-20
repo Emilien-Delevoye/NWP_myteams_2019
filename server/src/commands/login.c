@@ -52,6 +52,7 @@ static void add_to_user_list(data_server_t *data, struct user_s *new)
 static struct user_s *add_user(data_server_t *data, char *username)
 {
     struct user_s *new;
+    uuid_t uuid;
 
     if (!username)
         return (NULL);
@@ -60,8 +61,8 @@ static struct user_s *add_user(data_server_t *data, char *username)
         return (NULL);
     new->next = NULL;
     new->username = username;
-    uuid_generate_random(new->uuid);
-    remove_pipe_uuid(new->uuid);
+    uuid_generate_random(uuid);
+    uuid_unparse(uuid, new->uuid);
     printf(GREEN"[INFO] New user \"%s\" created\n"DEFAULT, username);
     add_to_user_list(data, new);
     server_event_user_created((const char *)new->uuid, new->username);

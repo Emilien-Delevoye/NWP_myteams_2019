@@ -16,6 +16,7 @@
 struct client_s;
 
 #define BF_S 2048
+#define LUID 36
 
 //Functions
 int take_port(char const *port_str);
@@ -58,7 +59,7 @@ struct write_data_s {
 
 struct user_s {
     char username[32];
-    uuid_t uuid;
+    char uuid[LUID];
 };
 
 struct client_s {

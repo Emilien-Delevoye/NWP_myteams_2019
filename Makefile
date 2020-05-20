@@ -27,7 +27,6 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/commands/logout.c	\
 			server/src/commands/create/create.c	\
 			server/src/commands/create_login_buffer.c	\
-			server/src/utils/remove_pipe_uuid.c	\
 			server/src/commands/create/create_channel.c	\
 			server/src/commands/create/create_team.c	\
 			server/src/commands/use/use.c
