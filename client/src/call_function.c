@@ -6,7 +6,6 @@
 */
 
 #include "client.h"
-#include <stdlib.h>
 #include <string.h>
 
 void (*tab_fct_commands[12])(struct client_s *client, char **command) =

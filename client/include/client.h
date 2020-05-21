@@ -12,11 +12,12 @@
 #include <stdbool.h>
 #include <sys/select.h>
 #include <uuid/uuid.h>
+#include <stdio.h>
 
 struct client_s;
 
 #define BF_S 2048
-#define LUID 36
+#define LUID 37
 
 //Functions
 int take_port(char const *port_str);
