@@ -10,11 +10,15 @@
 
 void logout_server(char read_buf[BF_S], struct client_s *cli)
 {
-    if (strncmp("logout", read_buf, 6) != 0)
-        return;
-    memcpy(cli->user.uuid, read_buf + 7, sizeof(cli->user.uuid) - 1);
-    memcpy(cli->user.username, read_buf + 7 + sizeof(cli->user.uuid),
-        sizeof(cli->user.username));
-    client_event_loggedout((const char *)cli->user.uuid, cli->user.username);
-    cli->server_running = false;
+    char uuid[LUID] = {0};
+    char username[33] = {0};
+
+    if (strncmp("logout", read_buf, 6) == 0) {
+        client_event_loggedout(cli->user.uuid, cli->user.username);
+        cli->server_running = false;
+    } else if (strncmp("bogout", read_buf, 6) == 0) {
+        memcpy(uuid, read_buf + 6, sizeof(uuid) - 1);
+        memcpy(username, read_buf + 6 + sizeof(uuid), sizeof(username) - 1);
+        client_event_loggedout(uuid, username);
+    }
 }
