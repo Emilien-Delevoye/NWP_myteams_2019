@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include <sys/select.h>
 #include <uuid/uuid.h>
+#include <stdio.h>
 
 struct client_s;
 
