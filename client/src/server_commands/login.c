@@ -8,7 +8,7 @@
 #include "client.h"
 #include <string.h>
 
-void login_server(char read_buf[BF_S], struct client_s *cli)
+void login_server_cli(char read_buf[BF_S], struct client_s *cli)
 {
     char uuid[LUID] = {0};
     char username[33] = {0};

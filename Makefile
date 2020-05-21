@@ -52,7 +52,8 @@ SRC_CLIENT	=	client/src/main.c	\
 			client/src/read_server.c	\
 			client/src/write_server.c	\
 			client/src/server_commands/login.c	\
-			client/src/server_commands/logout.c
+			client/src/server_commands/logout.c	\
+			client/src/server_commands/create.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 
@@ -62,11 +63,11 @@ CFLAGS  += -W -Wall -Wextra -pedantic -ansi -std=gnu11
 
 all:    $(NAME_SERVER) $(NAME_CLIENT)
 
-$(NAME_SERVER):	CFLAGS += -I server/include -I libs/myteams
+$(NAME_SERVER):	CFLAGS += -I server/include
 $(NAME_SERVER): $(OBJ_SERVER)
 	gcc -o $(NAME_SERVER) $(OBJ_SERVER) -Llibs/myteams -lmyteams -luuid
 
-$(NAME_CLIENT):	CFLAGS += -I client/include -I libs/myteams
+$(NAME_CLIENT):	CFLAGS += -I client/include
 $(NAME_CLIENT): $(OBJ_CLIENT)
 	gcc -o $(NAME_CLIENT) $(OBJ_CLIENT) -Llibs/myteams -lmyteams -luuid
 

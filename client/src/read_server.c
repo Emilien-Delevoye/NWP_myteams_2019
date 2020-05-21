@@ -10,8 +10,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void (*fct[10])(char [BF_S], struct client_s *) =
-    {login_server, logout_server, NULL};
+void (*fct[])(char [BF_S], struct client_s *) =
+    {login_server_cli, logout_server_cli, create_server_cli, NULL};
 
 void read_input(struct client_s *client)
 {
