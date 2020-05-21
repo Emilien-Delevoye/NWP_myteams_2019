@@ -20,7 +20,7 @@ static void create_team(char *n[3], data_server_t *data,
     new = malloc(sizeof(struct team_s));
     if (!new)
         return;
-    init_team(n, new, cli);
+    init_team(n, new, cli, data);
     if (!cur) {
         data->l_teams = new;
     } else {

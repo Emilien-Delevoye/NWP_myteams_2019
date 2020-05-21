@@ -26,7 +26,8 @@ bool existing_team(char *name, struct team_s *list, struct client_s *cli)
     return (false);
 }
 
-static void ping_client_n_team(struct team_s *new, struct client_s *cli)
+static void ping_client_n_team(struct team_s *new, struct client_s *cli,
+    data_server_t *data)
 {
     char buffer[BF_S] = {0};
 
@@ -38,10 +39,11 @@ static void ping_client_n_team(struct team_s *new, struct client_s *cli)
     strcpy(buffer + 9 + sizeof(new->uuid) + sizeof(new->name), new->desc);
     strcpy(buffer + 9 + sizeof(new->uuid) + sizeof(new->name) +
         sizeof(new->desc), "|");
-    add_to_buffer_list(cli, buffer);
+    add_to_broadcast_list(data, buffer, NULL);
 }
 
-void init_team(char *n[3], struct team_s *new, struct client_s *cli)
+void init_team(char *n[3], struct team_s *new, struct client_s *cli,
+    data_server_t *data)
 {
     size_t len_1 = strlen(n[1]);
     size_t len_2 = strlen(n[2]);
@@ -53,6 +55,6 @@ void init_team(char *n[3], struct team_s *new, struct client_s *cli)
     uuid_generate_random(uuid);
     uuid_unparse(uuid, new->uuid);
     server_event_team_created(U_TC new->uuid, new->name, U_TC cli->user->uuid);
-    ping_client_n_team(new, cli);
+    ping_client_n_team(new, cli, data);
     new->next = NULL;
 }

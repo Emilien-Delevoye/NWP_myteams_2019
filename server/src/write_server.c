@@ -40,7 +40,7 @@ void add_to_broadcast_list(data_server_t *data, char buffer[BF_S],
     if (!to_write)
         return;
     memset(to_write->packet, 0, sizeof(to_write->packet));
-    strcpy(to_write->packet, buffer);
+    memcpy(to_write->packet, buffer, sizeof(to_write->packet));
     to_write->next = NULL;
     to_write->ignore = ignore;
     if (prev)
