@@ -31,7 +31,8 @@ static struct write_data_s *get_prev_write_brdcast(data_server_t *data)
     return (cur);
 }
 
-void add_to_broadcast_list(data_server_t *data, char buffer[BF_S])
+void add_to_broadcast_list(data_server_t *data, char buffer[BF_S],
+    struct client_s *ignore)
 {
     struct write_data_s *to_write = malloc(sizeof(struct write_data_s));
     struct write_data_s *prev = get_prev_write_brdcast(data);
@@ -41,6 +42,7 @@ void add_to_broadcast_list(data_server_t *data, char buffer[BF_S])
     memset(to_write->packet, 0, sizeof(to_write->packet));
     strcpy(to_write->packet, buffer);
     to_write->next = NULL;
+    to_write->ignore = ignore;
     if (prev)
         prev->next = to_write;
     else
@@ -57,6 +59,7 @@ void add_to_buffer_list(struct client_s *client, char buffer[BF_S])
     memset(to_write->packet, 0, sizeof(to_write->packet));
     strcpy(to_write->packet, buffer);
     to_write->next = NULL;
+    to_write->ignore = NULL;
     if (prev)
         prev->next = to_write;
     else

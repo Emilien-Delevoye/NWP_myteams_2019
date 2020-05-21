@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include <sys/select.h>
 #include <uuid/uuid.h>
+#include <stdio.h>
 
 #define BF_S 2048
 #define U_TC (const char *)
@@ -41,7 +42,7 @@ void load_data(data_server_t *data);
 int get_max_fd_fct(data_server_t data);
 void read_buffer(char buffer[BF_S], data_server_t *data, struct client_s *cur);
 void add_to_buffer_list(struct client_s *client, char buffer[BF_S]);
-void add_to_broadcast_list(data_server_t *data, char buffer[BF_S]);
+void add_to_broadcast_list(data_server_t *, char [BF_S], struct client_s *);
 
 void login(char [BF_S], data_server_t *, struct client_s *);
 void logout(char [BF_S], data_server_t *, struct client_s *);
@@ -55,6 +56,7 @@ void init_team(char *n[3], struct team_s *, struct client_s *);
 
 struct write_data_s {
     char packet[BF_S];
+    struct client_s *ignore;
     struct write_data_s *next;
 };
 

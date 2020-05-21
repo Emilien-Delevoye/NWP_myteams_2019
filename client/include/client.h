@@ -16,7 +16,7 @@
 struct client_s;
 
 #define BF_S 2048
-#define LUID 36
+#define LUID 37
 
 //Functions
 int take_port(char const *port_str);

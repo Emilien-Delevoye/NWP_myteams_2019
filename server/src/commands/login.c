@@ -90,5 +90,5 @@ void login(char buffer[BF_S], data_server_t *data, struct client_s *client)
     create_log_buffer(out_buf, client->user, "login");
     add_to_buffer_list(client, out_buf);
     out_buf[0] = 'b';
-    add_to_broadcast_list(data, out_buf);
+    add_to_broadcast_list(data, out_buf, client);
 }
