@@ -14,7 +14,8 @@ void define_fd_set(struct client_s *client)
     FD_ZERO(&client->fd_wr);
     FD_SET(0, &client->fd_rd);
     FD_SET(client->sckt, &client->fd_rd);
-    FD_SET(client->sckt, &client->fd_wr);
+    if (client->to_write)
+        FD_SET(client->sckt, &client->fd_wr);
 }
 
 void read_af_select(struct client_s *client)
