@@ -28,7 +28,6 @@ int connect_client(const char *ip, int port)
         printf("connect: %s\n", strerror(errno));
         return (-1);
     }
-    perror("connect");
     printf("fd : %d\n", fd);
     printf("Connected to %s:%d\n", ip, port);
     return (fd);
