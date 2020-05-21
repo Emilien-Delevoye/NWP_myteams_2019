@@ -23,10 +23,6 @@ void interpret_cmd(char buf[BF_S], data_server_t *data, struct client_s *cur)
 
 void read_buffer(char buffer[BF_S], data_server_t *data, struct client_s *cur)
 {
-    char to_write[BF_S] = {0};
-
     printf(YELLOW"[INFO] New packet : %s\n"DEFAULT, buffer);
-    strcpy(to_write, "Message receive");
     interpret_cmd(buffer, data, cur);
-    add_to_buffer_list(cur, to_write);
 }
