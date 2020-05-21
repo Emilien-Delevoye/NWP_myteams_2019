@@ -46,7 +46,7 @@ static void setup_write_fd_set(data_server_t *data)
 {
     FD_SET(data->control_sckt, &data->sckt_w);
     for (struct client_s *cur = data->l_clients; cur; cur = cur->next)
-        if (cur->to_write)
+        if (cur->to_write || data->broadcast)
             FD_SET(cur->client_sckt, &data->sckt_w);
 }
 
