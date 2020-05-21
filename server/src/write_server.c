@@ -57,7 +57,7 @@ void add_to_buffer_list(struct client_s *client, char buffer[BF_S])
     if (!to_write)
         return;
     memset(to_write->packet, 0, sizeof(to_write->packet));
-    strcpy(to_write->packet, buffer);
+    memcpy(to_write->packet, buffer, sizeof(to_write->packet));
     to_write->next = NULL;
     to_write->ignore = NULL;
     if (prev)

@@ -50,6 +50,7 @@ void use(char [BF_S], data_server_t *, struct client_s *);
 
 void create_log_buffer(char buffer[BF_S], struct user_s *cur, char *cmd);
 void init_channel(char *[3], struct channel_s *, struct client_s *);
+bool existing_team(char *name, struct team_s *list, struct client_s *cli);
 void init_team(char *n[3], struct team_s *, struct client_s *);
 /* *** Structures definition *** */
 
@@ -59,20 +60,26 @@ struct write_data_s {
     struct write_data_s *next;
 };
 
+struct list_team_cli_s {
+    struct team_s *team;
+    struct list_team_cli_s *next;
+};
+
 struct client_s {
     int client_sckt;
     struct user_s *user;
     struct client_s *next;
     struct write_data_s *to_write;
-    struct team_s *team;
-    struct channel_s *channel;
-    struct thread_s *thread;
+    struct team_s *team;        //Pointeur vers la team actuellement use
+    struct channel_s *channel;  //Pointeur vers le channel actuellement use
+    struct thread_s *thread;    //Pointeur vers le thread actuellement use
     bool to_delete;
 };
 
 struct user_s {
     char *username;
     char uuid[LUID];
+    struct list_team_cli_s *joined_teams; //Liste des teams joined
     struct user_s *next;
 };
 
@@ -85,6 +92,7 @@ struct thread_s {
     char name[32];
     char message[512];
     char uuid[LUID];
+    struct comment_s *comments;
     struct thread_s *next;
 };
 
@@ -108,10 +116,10 @@ typedef struct data_server_s {
     fd_set sckt_r;
     fd_set sckt_w;
     int control_sckt;
-    struct team_s *l_teams;
-    struct client_s *l_clients;
-    struct user_s *l_users;
-    struct write_data_s *broadcast;
+    struct team_s *l_teams;     //Teams existantes pour le serveur
+    struct user_s *l_users;     //Users existants pour le serveur
+    struct client_s *l_clients; //Clients connectés au serveur
+    struct write_data_s *broadcast; //Liste de broadcast
     int (*get_max_fd)(data_server_t);
 } data_server_t;
 
