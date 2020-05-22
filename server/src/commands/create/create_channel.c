@@ -9,7 +9,23 @@
 #include <string.h>
 #include <unistd.h>
 
-//FIXME -> Changer cette fonction pour envoyer les bonnes informations au cli
+bool existing_channel(char *name, struct channel_s *list, struct client_s *cli)
+{
+    char buffer_error[BF_S] = {0};
+
+    if (!list)
+        return (false);
+    while (list) {
+        if (strcmp(name, list->name) == 0) {
+            strcpy(buffer_error, "already_exit");
+            add_to_buffer_list(cli, buffer_error);
+            return (true);
+        }
+        list = list->next;
+    }
+    return (false);
+}
+
 static void ping_client_n_channel(struct channel_s *new, struct client_s *cli)
 {
     char buffer[BF_S] = {0};

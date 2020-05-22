@@ -33,17 +33,20 @@ static void create_team(char *n[3], data_server_t *data,
 static void create_channel(char *n[3], struct client_s *cli)
 {
     struct channel_s *cur = cli->team->channels;
-    struct channel_s *new = malloc(sizeof(struct channel_s));
+    struct channel_s *new;
 
+    if (existing_channel(n[1], cur, cli))
+        return;
+    new = malloc(sizeof(struct channel_s));
     if (!new)
         return;
     init_channel(n, new, cli);
-    if (cli->team->channels) {
+    if (!cur) {
+        cli->team->channels = new;
+    } else {
         while (cur->next)
             cur = cur->next;
         cur->next = new;
-    } else {
-        cli->team->channels = new;
     }
 }
 
@@ -74,7 +77,7 @@ void create(char buffer[BF_S], data_server_t *data, struct client_s *client)
     create[2] = strtok(NULL, sep);
     if (!client->team && create[1] && create[2])
         create_team(create, data, client);
-    if (client->team && !client->thread && create[1] && create[2])
+    if (client->team && !client->channel && create[1] && create[2])
         create_channel(create, client);
     if (client->team && client->thread && create[1] && create[2])
         create_thread(create, client);

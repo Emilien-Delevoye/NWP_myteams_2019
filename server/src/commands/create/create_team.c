@@ -7,7 +7,6 @@
 
 #include "server.h"
 #include <string.h>
-#include <unistd.h>
 
 bool existing_team(char *name, struct team_s *list, struct client_s *cli)
 {
@@ -26,8 +25,7 @@ bool existing_team(char *name, struct team_s *list, struct client_s *cli)
     return (false);
 }
 
-static void ping_client_n_team(struct team_s *new, struct client_s *cli,
-    data_server_t *data)
+static void ping_client_n_team(struct team_s *new, data_server_t *data)
 {
     char buffer[BF_S] = {0};
 
@@ -55,6 +53,6 @@ void init_team(char *n[3], struct team_s *new, struct client_s *cli,
     uuid_generate_random(uuid);
     uuid_unparse(uuid, new->uuid);
     server_event_team_created(U_TC new->uuid, new->name, U_TC cli->user->uuid);
-    ping_client_n_team(new, cli, data);
+    ping_client_n_team(new, data);
     new->next = NULL;
 }
