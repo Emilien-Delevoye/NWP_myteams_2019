@@ -100,7 +100,7 @@ struct client_s {
 };
 
 struct user_s {
-    char *username;
+    char username[33];
     char uuid[LUID];
     struct list_team_cli_s *joined_teams; //Liste des teams joined
     struct user_s *next;
