@@ -25,7 +25,8 @@ bool existing_channel(char *name, struct channel_s *list, struct client_s *cli)
     return (false);
 }
 
-static void ping_client_n_channel(struct channel_s *new, struct client_s *cli)
+static void ping_client_n_channel(struct channel_s *new, struct client_s *cli,
+    data_server_t *data)
 {
     struct packet_server_s packet = {0};
 
@@ -33,11 +34,13 @@ static void ping_client_n_channel(struct channel_s *new, struct client_s *cli)
     memcpy(packet.channel_id, new->uuid, sizeof(new->uuid));
     memcpy(packet.name, new->name, sizeof(new->name));
     memcpy(packet.description, new->desc, sizeof(new->desc));
+    add_to_broadcast_list(data, packet, NULL);
+    packet.command = 25;
     add_to_buffer_list(cli, packet);
 }
 
 void init_channel(char *n[3], struct channel_s *new,
-    struct client_s *cli)
+    struct client_s *cli, data_server_t *data)
 {
     size_t len_1 = strlen(n[1]);
     size_t len_2 = strlen(n[2]);
@@ -50,6 +53,6 @@ void init_channel(char *n[3], struct channel_s *new,
     uuid_unparse(uuid, new->uuid);
     server_event_channel_created(U_TC cli->team->uuid, U_TC new->uuid,
         new->name);
-    ping_client_n_channel(new, cli);
+    ping_client_n_channel(new, cli, data);
     new->next = NULL;
 }

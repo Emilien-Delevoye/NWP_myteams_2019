@@ -50,7 +50,8 @@ void create(char [BF_S], data_server_t *, struct client_s *);
 void use(char [BF_S], data_server_t *, struct client_s *);
 
 void create_log_buffer(char buffer[BF_S], struct user_s *cur, char *cmd);
-void init_channel(char *[3], struct channel_s *, struct client_s *);
+void init_channel(char *[3], struct channel_s *, struct client_s *,
+    data_server_t *);
 bool existing_team(char *, struct team_s *, struct client_s *);
 bool existing_channel(char *, struct channel_s *, struct client_s *);
 void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
