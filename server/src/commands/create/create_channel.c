@@ -7,18 +7,17 @@
 
 #include "server.h"
 #include <string.h>
-#include <unistd.h>
 
 bool existing_channel(char *name, struct channel_s *list, struct client_s *cli)
 {
-    char buffer_error[BF_S] = {0};
+    struct packet_server_s packet = {0};
 
     if (!list)
         return (false);
     while (list) {
         if (strcmp(name, list->name) == 0) {
-            strcpy(buffer_error, "already_exit");
-            add_to_buffer_list(cli, buffer_error);
+            packet.command = 19;
+            add_to_buffer_list(cli, packet);
             return (true);
         }
         list = list->next;
@@ -28,16 +27,13 @@ bool existing_channel(char *name, struct channel_s *list, struct client_s *cli)
 
 static void ping_client_n_channel(struct channel_s *new, struct client_s *cli)
 {
-    char buffer[BF_S] = {0};
+    struct packet_server_s packet = {0};
 
-    strcpy(buffer, "n_channel|");
-    strcpy(buffer + 7, (const char *)new->uuid);
-    strcpy(buffer + 7 + sizeof(new->uuid), "|");
-    strcpy(buffer + 8 + sizeof(new->uuid), new->name);
-    strcpy(buffer + 8 + sizeof(new->uuid) + sizeof(new->name), "|");
-    strcpy(buffer + 9 + sizeof(new->uuid) + sizeof(new->name), new->desc);
-    write(1, buffer, BF_S);
-    add_to_buffer_list(cli, buffer);
+    packet.command = 6;
+    memcpy(packet.channel_id, new->uuid, sizeof(new->uuid));
+    memcpy(packet.name, new->name, sizeof(new->name));
+    memcpy(packet.description, new->desc, sizeof(new->desc));
+    add_to_buffer_list(cli, packet);
 }
 
 void init_channel(char *n[3], struct channel_s *new,

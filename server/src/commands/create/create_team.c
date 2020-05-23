@@ -10,14 +10,14 @@
 
 bool existing_team(char *name, struct team_s *list, struct client_s *cli)
 {
-    char buffer_error[BF_S] = {0};
+    struct packet_server_s packet = {0};
 
     if (!list)
         return (false);
     while (list) {
         if (strcmp(name, list->name) == 0) {
-            strcpy(buffer_error, "already_exit");
-            add_to_buffer_list(cli, buffer_error);
+            packet.command = 19;
+            add_to_buffer_list(cli, packet);
             return (true);
         }
         list = list->next;
@@ -27,17 +27,13 @@ bool existing_team(char *name, struct team_s *list, struct client_s *cli)
 
 static void ping_client_n_team(struct team_s *new, data_server_t *data)
 {
-    char buffer[BF_S] = {0};
+    struct packet_server_s packet = {0};
 
-    strcpy(buffer, "n_team|");
-    strcpy(buffer + 7, (const char *)new->uuid);
-    strcpy(buffer + 7 + sizeof(new->uuid), "|");
-    strcpy(buffer + 8 + sizeof(new->uuid), new->name);
-    strcpy(buffer + 8 + sizeof(new->uuid) + sizeof(new->name), "|");
-    strcpy(buffer + 9 + sizeof(new->uuid) + sizeof(new->name), new->desc);
-    strcpy(buffer + 9 + sizeof(new->uuid) + sizeof(new->name) +
-        sizeof(new->desc), "|");
-    add_to_broadcast_list(data, buffer, NULL);
+    packet.command = 5;
+    memcpy(packet.channel_id, new->uuid, sizeof(new->uuid));
+    memcpy(packet.name, new->name, sizeof(new->name));
+    memcpy(packet.description, new->desc, sizeof(new->desc));
+    add_to_broadcast_list(data, packet, NULL);
 }
 
 void init_team(char *n[3], struct team_s *new, struct client_s *cli,

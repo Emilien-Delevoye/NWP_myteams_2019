@@ -13,7 +13,7 @@ static void write_to_client(struct client_s *cur)
 {
     struct write_data_s *data = cur->to_write;
 
-    if (write(cur->client_sckt, data->packet, BF_S) != BF_S)
+    if (write(cur->client_sckt, &data->packet, sizeof(data->packet)) != BF_S)
         return;
     cur->to_write = data->next;
     free(data);
