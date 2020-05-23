@@ -99,7 +99,8 @@ struct packet_server_s {
     char body[513];
     int user_status;
     time_t time_stamp;
-};
+    unsigned char broadcast;
+} __attribute__((packed));
 
 /* *** RX Server functions *** */
 void event_loggedin(struct packet_server_s, struct client_s *);

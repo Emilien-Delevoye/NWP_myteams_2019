@@ -68,7 +68,7 @@ struct packet_server_s {
     int user_status;
     time_t time_stamp;
     unsigned char broadcast;
-};
+} __attribute__((packed));
 
 /* *** Structures definition *** */
 
