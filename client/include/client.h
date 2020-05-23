@@ -88,59 +88,101 @@ struct client_s {
 #define CYAN "\033[36m"
 #define WHITE "\033[37m"
 
+struct packet_server_s {
+    unsigned short command;
+    char team_id[LUID];
+    char channel_id[LUID];
+    char thread_id[LUID];
+    char user_id[LUID];
+    char name[33];
+    char description[256];
+    char body[513];
+    int user_status;
+    time_t time_stamp;
+};
+
+/* *** RX Server functions *** */
+void event_loggedin(struct packet_server_s, struct client_s *);
+void event_loggedout(struct packet_server_s, struct client_s *);
+void event_pv_mes_rx(struct packet_server_s, struct client_s *);
+void event_th_mes_rx(struct packet_server_s, struct client_s *);
+void event_team_created(struct packet_server_s, struct client_s *);
+void event_channel_created(struct packet_server_s, struct client_s *);
+void event_thread_created(struct packet_server_s, struct client_s *);
+void print_users(struct packet_server_s, struct client_s *);
+void print_teams(struct packet_server_s, struct client_s *);
+void team_print_channels(struct packet_server_s, struct client_s *);
+void channel_print_threads(struct packet_server_s, struct client_s *);
+void thread_print_replies(struct packet_server_s, struct client_s *);
+void pv_msg_print_msg(struct packet_server_s, struct client_s *);
+void error_unk_team(struct packet_server_s, struct client_s *);
+void error_unk_channel(struct packet_server_s, struct client_s *);
+void error_unk_thread(struct packet_server_s, struct client_s *);
+void error_unk_user(struct packet_server_s, struct client_s *);
+void error_unauthorized(struct packet_server_s, struct client_s *);
+void error_already_exist(struct packet_server_s, struct client_s *);
+void print_team(struct packet_server_s, struct client_s *);
+void print_channel(struct packet_server_s, struct client_s *);
+void print_thread(struct packet_server_s, struct client_s *);
+void print_team_created(struct packet_server_s, struct client_s *);
+void print_channel_created(struct packet_server_s, struct client_s *);
+void print_thread_created(struct packet_server_s, struct client_s *);
+void print_reply_created(struct packet_server_s, struct client_s *);
+void print_client_subscribed(struct packet_server_s, struct client_s *);
+void print_client_unsubscribed(struct packet_server_s, struct client_s *);
 /* *** Lib commands *** */
 
-int client_event_loggedin(char const *user_id, const char *user_name);
-int client_event_loggedout(char const *user_id, const char *user_name);
+int client_event_loggedin(char const *user_id, const char *user_name); //1
+int client_event_loggedout(char const *user_id, const char *user_name); //2
 int client_event_private_message_received(char const *user_id,
-    char const *message_body);
+    char const *message_body); //3
 int client_event_thread_message_received(char const *team_id,
-    char const *thread_id, char const *user_id, char const *message);
+    char const *thread_id, char const *user_id, char const *message); //4
 int client_event_team_created(char const *team_id, char const *team_name,
-    char const *team_description);
+    char const *team_description); //5
 int client_event_channel_created(char const *channel_id,
-    char const *channel_name, char const *channel_description);
+    char const *channel_name, char const *channel_description); //6
 int client_event_thread_created(char const *thread_id, char const *user_id,
     time_t thread_timestamp, char const *thread_title,
-    char const *thread_body);
+    char const *thread_body); //7
 int client_print_users(char const *user_id, char const *user_name,
-    int user_status);
+    int user_status); //8
 int client_print_teams(char const *team_id, char const *team_name,
-    char const *team_description);
+    char const *team_description); //9
 int client_team_print_channels(char const *channel_id,
-    char const *channel_name, char const *channel_description);
+    char const *channel_name, char const *channel_description); //10
 int client_channel_print_threads(char const *thread_id, char const *user_id,
     time_t thread_timestamp, char const *thread_title,
-    char const *thread_body);
+    char const *thread_body); //11
 int client_thread_print_replies(char const *thread_id, char const *user_id,
-    time_t reply_timestamp, char const *reply_body);
+    time_t reply_timestamp, char const *reply_body); //12
 int client_private_message_print_messages(char const *sender_id,
-    time_t timestamp, char const *message);
-int client_error_unknown_team(char const *team_id);
-int client_error_unknown_channel(char const *channel_id);
-int client_error_unknown_thread(char const *thread_id);
-int client_error_unknown_user(char const *user_id);
-int client_error_unauthorized(void);
-int client_error_already_exist(void);
+    time_t timestamp, char const *message); //13
+int client_error_unknown_team(char const *team_id); //14
+int client_error_unknown_channel(char const *channel_id); //15
+int client_error_unknown_thread(char const *thread_id); //16
+int client_error_unknown_user(char const *user_id); //17
+int client_error_unauthorized(void); //18
+int client_error_already_exist(void); //19
 int client_print_user(char const *user_id, char const *user_name,
-    int user_status);
+    int user_status); //20
 int client_print_team(char const *team_id, char const *team_name,
-    char const *team_description);
+    char const *team_description); //21
 int client_print_channel(char const *channel_id, char const *channel_name,
-    char const *channel_description);
+    char const *channel_description); //22
 int client_print_thread(char const *thread_id, char const *user_id,
     time_t thread_timestamp, char const *thread_title,
-    char const *thread_body);
+    char const *thread_body); //23
 int client_print_team_created(char const *team_id, char const *team_name,
-    char const *team_description);
+    char const *team_description); //24
 int client_print_channel_created(char const *channel_id,
-    char const *channel_name, char const *channel_description);
+    char const *channel_name, char const *channel_description); //25
 int client_print_thread_created(char const *thread_id, char const *user_id,
     time_t thread_timestamp, char const *thread_title,
-    char const *thread_body);
+    char const *thread_body); //26
 int client_print_reply_created(char const *thread_id,
-    char const *user_id, time_t reply_timestamp, char const *reply_body);
-int client_print_subscribed(char const *user_id, char const *team_id);
-int client_print_unsubscribed(char const *user_id, char const *team_id);
+    char const *user_id, time_t reply_timestamp, char const *reply_body); //27
+int client_print_subscribed(char const *user_id, char const *team_id); //28
+int client_print_unsubscribed(char const *user_id, char const *team_id); //29
 
 #endif

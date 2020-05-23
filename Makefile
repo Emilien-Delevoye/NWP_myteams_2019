@@ -52,9 +52,35 @@ SRC_CLIENT	=	client/src/main.c	\
 			client/src/select_client.c	\
 			client/src/read_server.c	\
 			client/src/write_server.c	\
-			client/src/server_commands/login.c	\
-			client/src/server_commands/logout.c	\
-			client/src/server_commands/create.c
+			client/src/server_commands/channel_print_threads.c \
+			client/src/server_commands/error_already_exist.c \
+			client/src/server_commands/error_unauthorized.c	\
+			client/src/server_commands/error_unk_channel.c	\
+			client/src/server_commands/error_unk_team.c	\
+			client/src/server_commands/error_unk_thread.c	\
+			client/src/server_commands/error_unk_user.c	\
+			client/src/server_commands/event_channel_created.c \
+			client/src/server_commands/event_loggedin.c	\
+			client/src/server_commands/event_loggedout.c	\
+			client/src/server_commands/event_pv_mes_rx.c	\
+			client/src/server_commands/event_team_created.c	\
+			client/src/server_commands/event_th_mes_rx.c	\
+			client/src/server_commands/event_thread_created.c \
+			client/src/server_commands/print_channel.c	\
+			client/src/server_commands/print_channel_created.c \
+			client/src/server_commands/print_client_subscribed.c \
+			client/src/server_commands/print_client_unsubscribed.c\
+			client/src/server_commands/print_reply_created.c \
+			client/src/server_commands/print_team.c	\
+			client/src/server_commands/print_team_created.c	\
+			client/src/server_commands/print_teams.c \
+			client/src/server_commands/print_thread.c \
+			client/src/server_commands/print_thread_created.c \
+			client/src/server_commands/print_user.c	\
+			client/src/server_commands/print_users.c \
+			client/src/server_commands/pv_msg_print_msg.c \
+			client/src/server_commands/team_print_channels.c \
+			client/src/server_commands/thread_print_replies.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 
