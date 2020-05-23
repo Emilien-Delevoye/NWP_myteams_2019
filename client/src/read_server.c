@@ -31,6 +31,7 @@ void (*rx_server[])(struct packet_server_s, struct client_s *) =
     error_unk_user,
     error_unauthorized,
     error_already_exist,
+    print_user,
     print_team,
     print_channel,
     print_thread,

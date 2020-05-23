@@ -122,6 +122,7 @@ void error_unk_thread(struct packet_server_s, struct client_s *);
 void error_unk_user(struct packet_server_s, struct client_s *);
 void error_unauthorized(struct packet_server_s, struct client_s *);
 void error_already_exist(struct packet_server_s, struct client_s *);
+void print_user(struct packet_server_s, struct client_s *);
 void print_team(struct packet_server_s, struct client_s *);
 void print_channel(struct packet_server_s, struct client_s *);
 void print_thread(struct packet_server_s, struct client_s *);
@@ -131,6 +132,7 @@ void print_thread_created(struct packet_server_s, struct client_s *);
 void print_reply_created(struct packet_server_s, struct client_s *);
 void print_client_subscribed(struct packet_server_s, struct client_s *);
 void print_client_unsubscribed(struct packet_server_s, struct client_s *);
+
 /* *** Lib commands *** */
 
 int client_event_loggedin(char const *user_id, const char *user_name); //1

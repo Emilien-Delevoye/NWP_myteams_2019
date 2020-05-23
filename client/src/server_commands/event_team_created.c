@@ -9,6 +9,6 @@
 
 void event_team_created(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_event_team_created(packet.team_id, packet.name, packet.description);
     (void)cli;
 }
