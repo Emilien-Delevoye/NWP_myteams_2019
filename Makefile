@@ -29,6 +29,7 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/commands/create_login_buffer.c	\
 			server/src/commands/create/create_channel.c	\
 			server/src/commands/create/create_team.c	\
+			server/src/commands/create/create_thread.c	\
 			server/src/commands/use/use.c	\
 			server/src/commands/use/use_team.c
 

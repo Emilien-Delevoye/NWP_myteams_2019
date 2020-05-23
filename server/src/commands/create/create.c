@@ -54,18 +54,21 @@ static void create_channel(char *n[3], struct client_s *cli,
 static void create_thread(char *n[3], struct client_s *cli,
     data_server_t *data)
 {
-    struct channel_s *cur = cli->team->channels;
-    struct channel_s *new = malloc(sizeof(struct channel_s));
+    struct thread_s *cur = cli->channel->threads;
+    struct thread_s *new;
 
+    if (existing_thread(n[1], cur, cli))
+        return;
+    new = malloc(sizeof(struct thread_s));
     if (!new)
         return;
-    init_channel(n, new, cli, data);
-    if (cli->team->channels) {
+    init_thread(n, new, cli, data);
+    if (!cur) {
+        cli->channel->threads = new;
+    } else {
         while (cur->next)
             cur = cur->next;
         cur->next = new;
-    } else {
-        cli->team->channels = new;
     }
 }
 
@@ -81,6 +84,7 @@ void create(char buffer[BF_S], data_server_t *data, struct client_s *client)
         create_team(create, data, client);
     if (client->team && !client->channel && create[1] && create[2])
         create_channel(create, client, data);
-    if (client->team && client->thread && create[1] && create[2])
+    if (client->team && client->channel && !client->thread && create[1]
+        && create[2])
         create_thread(create, client, data);
 }
