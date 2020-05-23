@@ -15,7 +15,7 @@
 
 #define BF_S 2048
 #define U_TC (const char *)
-#define LUID 36
+#define LUID 37
 
 /* *** Pre-structure def *** */
 struct user_s;
@@ -23,7 +23,7 @@ struct client_s;
 struct channel_s;
 struct team_s;
 typedef struct data_server_s data_server_t;
-
+struct packet_server_s;
 
 /* *** Function definition *** */
 int take_port(char const *);
@@ -40,8 +40,9 @@ void close_connections(data_server_t data);
 void load_data(data_server_t *data);
 int get_max_fd_fct(data_server_t data);
 void read_buffer(char buffer[BF_S], data_server_t *data, struct client_s *cur);
-void add_to_buffer_list(struct client_s *client, char buffer[BF_S]);
-void add_to_broadcast_list(data_server_t *, char [BF_S], struct client_s *);
+void add_to_buffer_list(struct client_s *client, struct packet_server_s pack);
+void add_to_broadcast_list(data_server_t *data, struct packet_server_s pack,
+    struct client_s *ignore);
 
 void login(char [BF_S], data_server_t *, struct client_s *);
 void logout(char [BF_S], data_server_t *, struct client_s *);
@@ -50,12 +51,29 @@ void use(char [BF_S], data_server_t *, struct client_s *);
 
 void create_log_buffer(char buffer[BF_S], struct user_s *cur, char *cmd);
 void init_channel(char *[3], struct channel_s *, struct client_s *);
-bool existing_team(char *name, struct team_s *list, struct client_s *cli);
+bool existing_team(char *, struct team_s *, struct client_s *);
+bool existing_channel(char *, struct channel_s *, struct client_s *);
 void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
+void use_team(char *n[2], data_server_t *data, struct client_s *cli);
+
+struct packet_server_s {
+    unsigned short command;
+    char team_id[LUID];
+    char channel_id[LUID];
+    char thread_id[LUID];
+    char user_id[LUID];
+    char name[33];
+    char description[256];
+    char body[513];
+    int user_status;
+    time_t time_stamp;
+    unsigned char broadcast;
+} __attribute__((packed));
+
 /* *** Structures definition *** */
 
 struct write_data_s {
-    char packet[BF_S];
+    struct packet_server_s packet;
     struct client_s *ignore;
     struct write_data_s *next;
 };

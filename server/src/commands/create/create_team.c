@@ -7,18 +7,17 @@
 
 #include "server.h"
 #include <string.h>
-#include <unistd.h>
 
 bool existing_team(char *name, struct team_s *list, struct client_s *cli)
 {
-    char buffer_error[BF_S] = {0};
+    struct packet_server_s packet = {0};
 
     if (!list)
         return (false);
     while (list) {
         if (strcmp(name, list->name) == 0) {
-            strcpy(buffer_error, "already_exit");
-            add_to_buffer_list(cli, buffer_error);
+            packet.command = 19;
+            add_to_buffer_list(cli, packet);
             return (true);
         }
         list = list->next;
@@ -26,20 +25,18 @@ bool existing_team(char *name, struct team_s *list, struct client_s *cli)
     return (false);
 }
 
-static void ping_client_n_team(struct team_s *new, struct client_s *cli,
-    data_server_t *data)
+static void ping_client_n_team(struct team_s *new, data_server_t *data,
+    struct client_s *cli)
 {
-    char buffer[BF_S] = {0};
+    struct packet_server_s packet = {0};
 
-    strcpy(buffer, "n_team|");
-    strcpy(buffer + 7, (const char *)new->uuid);
-    strcpy(buffer + 7 + sizeof(new->uuid), "|");
-    strcpy(buffer + 8 + sizeof(new->uuid), new->name);
-    strcpy(buffer + 8 + sizeof(new->uuid) + sizeof(new->name), "|");
-    strcpy(buffer + 9 + sizeof(new->uuid) + sizeof(new->name), new->desc);
-    strcpy(buffer + 9 + sizeof(new->uuid) + sizeof(new->name) +
-        sizeof(new->desc), "|");
-    add_to_broadcast_list(data, buffer, NULL);
+    packet.command = 5;
+    memcpy(packet.team_id, new->uuid, sizeof(new->uuid));
+    memcpy(packet.name, new->name, sizeof(new->name));
+    memcpy(packet.description, new->desc, sizeof(new->desc));
+    add_to_broadcast_list(data, packet, NULL);
+    packet.command = 24;
+    add_to_buffer_list(cli, packet);
 }
 
 void init_team(char *n[3], struct team_s *new, struct client_s *cli,
@@ -54,7 +51,7 @@ void init_team(char *n[3], struct team_s *new, struct client_s *cli,
     strncpy(new->desc, n[2], (len_2 > 255 ? 255 : len_2));
     uuid_generate_random(uuid);
     uuid_unparse(uuid, new->uuid);
-    server_event_team_created(U_TC new->uuid, new->name, U_TC cli->user->uuid);
-    ping_client_n_team(new, cli, data);
+    server_event_team_created(new->uuid, new->name, cli->user->uuid);
+    ping_client_n_team(new, data, cli);
     new->next = NULL;
 }

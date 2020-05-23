@@ -73,22 +73,19 @@ static struct user_s *add_user(data_server_t *data, char *username)
 void login(char buffer[BF_S], data_server_t *data, struct client_s *client)
 {
     char *name = extract_name(buffer);
-    char out_buf[BF_S] = {0};
+    struct packet_server_s packet = {0};
 
-    if (client->user) {
-        puts(YELLOW"[INFO] User already logged in"DEFAULT);
+    if (client->user || !name)
         return;
-    } else if (!name) {
-        puts(RED"[ERROR] Malloc error: extract_name()"DEFAULT);
-        return;
-    }
     client->user = get_existing_user(data, name);
     if (!client->user)
         client->user = add_user(data, name);
     if (!client->user)
         return;
-    create_log_buffer(out_buf, client->user, "login");
-    add_to_buffer_list(client, out_buf);
-    out_buf[0] = 'b';
-    add_to_broadcast_list(data, out_buf, client);
+    packet.command = 1;
+    memcpy(packet.user_id, client->user->uuid, sizeof(packet.user_id));
+    memcpy(packet.name, client->user->username, sizeof(packet.name));
+    add_to_buffer_list(client, packet);
+    packet.broadcast = 1;
+    add_to_broadcast_list(data, packet, client);
 }

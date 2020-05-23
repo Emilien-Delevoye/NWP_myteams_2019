@@ -6,18 +6,21 @@
 */
 
 #include "server.h"
+#include <string.h>
 
 void logout(char buffer[BF_S] __attribute__((unused)), data_server_t *data,
             struct client_s *client)
 {
-    char out_buf[BF_S] = {0};
+    struct packet_server_s packet = {0};
 
     if (!client->user)
         return;
     server_event_user_logged_out((const char *)client->user->uuid);
-    create_log_buffer(out_buf, client->user, "logout");
-    add_to_buffer_list(client, out_buf);
-    out_buf[0] = 'b';
-    add_to_broadcast_list(data, out_buf, client);
+    packet.command = 2;
+    memcpy(packet.user_id, client->user->uuid, sizeof(packet.user_id));
+    memcpy(packet.name, client->user->username, sizeof(packet.name));
+    add_to_buffer_list(client, packet);
+    packet.broadcast = 1;
+    add_to_broadcast_list(data, packet, client);
     client->user = NULL;
 }
