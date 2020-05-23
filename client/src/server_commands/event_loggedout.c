@@ -9,6 +9,7 @@
 
 void event_loggedout(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
-    (void)cli;
+    client_event_loggedout(packet.user_id, packet.name);
+    if (packet.broadcast == 0)
+        cli->server_running = false;
 }

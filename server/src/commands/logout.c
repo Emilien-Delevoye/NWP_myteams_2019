@@ -20,6 +20,7 @@ void logout(char buffer[BF_S] __attribute__((unused)), data_server_t *data,
     memcpy(packet.user_id, client->user->uuid, sizeof(packet.user_id));
     memcpy(packet.name, client->user->username, sizeof(packet.name));
     add_to_buffer_list(client, packet);
+    packet.broadcast = 1;
     add_to_broadcast_list(data, packet, client);
     client->user = NULL;
 }
