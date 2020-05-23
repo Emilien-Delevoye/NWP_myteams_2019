@@ -9,6 +9,7 @@
 
 void print_channel_created(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_print_channel_created(packet.channel_id, packet.name,
+        packet.description);
     (void)cli;
 }

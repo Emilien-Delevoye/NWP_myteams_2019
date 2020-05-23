@@ -8,7 +8,7 @@
 #include "server.h"
 #include <string.h>
 
-bool existing_channel(char *name, struct channel_s *list, struct client_s *cli)
+bool existing_thread(char *name, struct thread_s *list, struct client_s *cli)
 {
     struct packet_server_s packet = {0};
 
@@ -25,34 +25,39 @@ bool existing_channel(char *name, struct channel_s *list, struct client_s *cli)
     return (false);
 }
 
-static void ping_client_n_channel(struct channel_s *new, struct client_s *cli,
+static void ping_client_n_thread(struct thread_s *new, struct client_s *cli,
     data_server_t *data)
 {
     struct packet_server_s packet = {0};
 
-    packet.command = 6;
-    memcpy(packet.channel_id, new->uuid, sizeof(new->uuid));
+    packet.command = 7;
+    memcpy(packet.thread_id, new->uuid, sizeof(new->uuid));
+    memcpy(packet.user_id, cli->user->uuid, sizeof(packet.user_id));
     memcpy(packet.name, new->name, sizeof(new->name));
-    memcpy(packet.description, new->desc, sizeof(new->desc));
+    memcpy(packet.body, new->msg, sizeof(new->msg));
+    packet.time_stamp = new->timestamp;
     add_to_broadcast_list(data, packet, NULL);
-    packet.command = 25;
+    packet.command = 26;
     add_to_buffer_list(cli, packet);
 }
 
-void init_channel(char *n[3], struct channel_s *new,
+void init_thread(char *n[3], struct thread_s *new,
     struct client_s *cli, data_server_t *data)
 {
     size_t len_1 = strlen(n[1]);
     size_t len_2 = strlen(n[2]);
     uuid_t uuid;
 
-    memset(new, 0, sizeof(struct channel_s));
+    memset(new, 0, sizeof(struct thread_s));
     strncpy(new->name, n[1], (len_1 > 32 ? 32 : len_1));
-    strncpy(new->desc, n[2], (len_2 > 255 ? 255 : len_2));
+    strncpy(new->msg, n[2], (len_2 > 512 ? 512 : len_2));
+    new->timestamp = time(NULL);
+    new->comments = NULL;
+    new->next = NULL;
     uuid_generate_random(uuid);
     uuid_unparse(uuid, new->uuid);
-    server_event_channel_created(U_TC cli->team->uuid, U_TC new->uuid,
-        new->name);
-    ping_client_n_channel(new, cli, data);
+    server_event_thread_created(cli->channel->uuid, new->uuid, cli->user->uuid,
+        new->msg);
+    ping_client_n_thread(new, cli, data);
     new->next = NULL;
 }

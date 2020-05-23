@@ -20,6 +20,7 @@
 /* *** Pre-structure def *** */
 struct user_s;
 struct client_s;
+struct thread_s;
 struct channel_s;
 struct team_s;
 typedef struct data_server_s data_server_t;
@@ -50,10 +51,14 @@ void create(char [BF_S], data_server_t *, struct client_s *);
 void use(char [BF_S], data_server_t *, struct client_s *);
 
 void create_log_buffer(char buffer[BF_S], struct user_s *cur, char *cmd);
-void init_channel(char *[3], struct channel_s *, struct client_s *);
+void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
+void init_channel(char *[3], struct channel_s *, struct client_s *,
+    data_server_t *);
+void init_thread(char *[3], struct thread_s *,
+    struct client_s *, data_server_t *);
 bool existing_team(char *, struct team_s *, struct client_s *);
 bool existing_channel(char *, struct channel_s *, struct client_s *);
-void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
+bool existing_thread(char *, struct thread_s *, struct client_s *);
 void use_team(char *n[2], data_server_t *data, struct client_s *cli);
 
 struct packet_server_s {
@@ -108,8 +113,9 @@ struct comment_s {
 
 struct thread_s {
     char name[32];
-    char message[512];
+    char msg[512];
     char uuid[LUID];
+    time_t timestamp;
     struct comment_s *comments;
     struct thread_s *next;
 };

@@ -47,10 +47,6 @@ void use(struct client_s *client, char **command);
 void user(struct client_s *client, char **command);
 void users(struct client_s *client, char **command);
 
-void login_server_cli(char [BF_S], struct client_s *);
-void logout_server_cli(char [BF_S], struct client_s *);
-void create_server_cli(char [BF_S], struct client_s *);
-
 struct write_data_s {
     char packet[BF_S];
     struct write_data_s *next;

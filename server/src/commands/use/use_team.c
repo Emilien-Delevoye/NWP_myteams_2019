@@ -69,7 +69,7 @@ void use_team(char *n[4], data_server_t *data, struct client_s *cli)
     }
     packet.command = 14;
     memcpy(packet.thread_id, n[1],
-        (strlen(n[3]) > sizeof(packet.thread_id) ?
+        (strlen(n[1]) > sizeof(packet.thread_id) ?
             sizeof(packet.thread_id) : strlen(n[1])));
     add_to_buffer_list(cli, packet);
 }
