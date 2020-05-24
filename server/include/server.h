@@ -192,7 +192,7 @@ int server_event_private_message_sended(char const *sender_id,
 
 struct save_user_s
 {
-    char username[32];
+    char username[33];
     char uuid[LUID];
 };
 

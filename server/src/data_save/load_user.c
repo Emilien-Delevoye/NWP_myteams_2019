@@ -24,6 +24,7 @@ void add_user_to_list(struct save_user_s save_user, struct load_data_s *load)
             current = current->next;
         current->next = new;
     }
+    server_event_user_loaded(new->user.uuid, new->user.username);
 }
 
 void load_user(int fd, struct load_data_s *load_data)
