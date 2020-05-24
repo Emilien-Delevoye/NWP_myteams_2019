@@ -51,7 +51,6 @@ void logout(char [BF_S], data_server_t *, struct client_s *);
 void create(char [BF_S], data_server_t *, struct client_s *);
 void use(char [BF_S], data_server_t *, struct client_s *);
 
-void create_log_buffer(char buffer[BF_S], struct user_s *cur, char *cmd);
 void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
 void init_channel(char *[3], struct channel_s *, struct client_s *,
     data_server_t *);
@@ -63,8 +62,11 @@ bool existing_thread(char *, struct thread_s *, struct client_s *);
 void use_team(char *n[2], data_server_t *data, struct client_s *cli);
 void save_team(data_server_t, int);
 void load_joined_team(int fd, struct load_data_s *load);
-void load_team(int fd, struct load_data_s *load_data);
 void load_user(int fd, struct load_data_s *load_data);
+void load_team(int fd, struct load_data_s *load_data);
+void load_channel(int fd, struct load_data_s *load_data);
+void load_thread(int fd, struct load_data_s *load_data);
+void load_comment(int fd, struct load_data_s *load_data);
 
 struct packet_server_s {
     unsigned short command;
@@ -229,12 +231,10 @@ struct save_comment_s
 struct load_data_s {
     struct l_save_user_s *user;
     struct l_save_team_s *team;
-    struct channel_s *channel;
-    struct thread_s *thread;
     struct l_save_user_s *cur_user;
     struct l_save_team_s *cur_team;
-    struct channel_s *cur_channel;
-    struct thread_s *cur_thread;
+    struct l_save_channel_s *cur_channel;
+    struct l_save_thread_s *cur_thread;
 };
 
 struct l_joi_team_s {
@@ -248,8 +248,27 @@ struct l_save_user_s {
     struct l_save_user_s *next;
 };
 
+struct l_save_comment_s {
+    struct save_comment_s comment;
+    struct l_save_comment_s *next;
+};
+
+struct l_save_thread_s {
+    struct save_thread_s thread;
+    struct l_save_comment_s *comments;
+    struct l_save_thread_s *next;
+};
+
+struct l_save_channel_s {
+    struct save_channel_s channel;
+    struct l_save_thread_s *threads;
+    struct l_save_channel_s *next;
+};
+
 struct l_save_team_s {
     struct save_team_s team;
+    struct l_save_channel_s *channels;
     struct l_save_team_s *next;
 };
+
 #endif

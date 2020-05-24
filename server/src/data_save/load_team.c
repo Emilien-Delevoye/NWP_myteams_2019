@@ -19,6 +19,10 @@ void add_team_to_list(struct save_team_s save_team, struct load_data_s *load)
     new->team = save_team;
     new->next = NULL;
     load->cur_team = new;
+    load->cur_channel = NULL;
+    load->cur_thread = NULL;
+    load->cur_user = NULL;
+    new->channels = NULL;
     if (!load->team) {
         load->team = new;
     } else {

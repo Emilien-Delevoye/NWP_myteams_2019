@@ -34,7 +34,10 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/commands/use/use_team.c	\
 			server/src/data_save/save_team.c	\
 			server/src/data_save/load_user.c	\
-			server/src/data_save/load_team.c
+			server/src/data_save/load_team.c	\
+			server/src/data_save/load_thread.c	\
+			server/src/data_save/load_comment.c	\
+			server/src/data_save/load_channel.c
 
 SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\

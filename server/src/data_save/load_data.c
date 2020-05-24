@@ -9,6 +9,14 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+const char value_load[10] = "1234567890";
+
+static void (*fct[])(int, struct load_data_s *) =
+{
+    load_user, load_joined_team, load_team, load_channel, load_thread,
+    load_comment, NULL
+};
+
 static char get_ctrl(int fd, char *ctrl)
 {
     int len = read(fd, ctrl, 1);
@@ -26,12 +34,8 @@ void load_data(data_server_t *data __attribute__((unused)))
 
     if (fd < 0)
         return;
-    while (get_ctrl(fd, &ctrl) != 0) {
-        if (ctrl == '1')
-            load_user(fd, &load_data);
-        else if (ctrl == '2')
-            load_joined_team(fd, &load_data);
-        else
-            load_team(fd, &load_data);
-    }
+    while (get_ctrl(fd, &ctrl) != 0)
+        for (int a = 0; a < sizeof(value_load); ++a)
+            if (ctrl == value_load[a] && fct[a])
+                fct[a](fd, &load_data);
 }
