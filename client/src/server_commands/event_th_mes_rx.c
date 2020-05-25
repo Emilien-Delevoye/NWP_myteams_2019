@@ -9,6 +9,7 @@
 
 void event_th_mes_rx(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_event_thread_message_received(packet.team_id, packet.thread_id,
+        packet.user_id, packet.body);
     (void)cli;
 }

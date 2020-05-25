@@ -9,6 +9,7 @@
 
 void print_reply_created(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_print_reply_created(packet.thread_id, packet.user_id,
+        packet.time_stamp, packet.body);
     (void)cli;
 }
