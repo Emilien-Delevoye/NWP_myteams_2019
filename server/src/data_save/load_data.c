@@ -57,7 +57,7 @@ void load_data(data_server_t *data)
     if (fd < 0)
         return;
     while (get_ctrl(fd, &ctrl) != 0)
-        for (int a = 0; a < sizeof(value_load); ++a)
+        for (size_t a = 0; a < sizeof(value_load); ++a)
             if (ctrl == value_load[a] && fct[a])
                 fct[a](fd, &load_data);
     for (struct l_save_team_s *cur = load_data.team; cur; cur = cur->next)

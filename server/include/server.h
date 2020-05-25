@@ -20,6 +20,7 @@
 /* *** Pre-structure def *** */
 struct user_s;
 struct client_s;
+struct comment_s;
 struct thread_s;
 struct channel_s;
 struct team_s;
@@ -69,6 +70,7 @@ void load_channel(int fd, struct load_data_s *load_data);
 void load_thread(int fd, struct load_data_s *load_data);
 void load_comment(int fd, struct load_data_s *load_data);
 void add_team_data(data_server_t *data, struct l_save_team_s team);
+void send_comment_packet(struct client_s *cli, struct comment_s *new);
 
 struct packet_server_s {
     unsigned short command;

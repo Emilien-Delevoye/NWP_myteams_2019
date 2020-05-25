@@ -74,7 +74,7 @@ static void create_thread(char *n[3], struct client_s *cli,
 
 static void create_comment(char *n[3], struct client_s *cli)
 {
-    struct comment_s *cur = cli->channel->threads->comments;
+    struct comment_s *cur = cli->thread->comments;
     struct comment_s *new = malloc(sizeof(struct comment_s));
     size_t size = strlen(n[1]);
 
@@ -90,6 +90,7 @@ static void create_comment(char *n[3], struct client_s *cli)
             cur = cur->next;
         cur->next = new;
     }
+    send_comment_packet(cli, new);
 }
 
 void create(char buffer[BF_S], data_server_t *data, struct client_s *client)
