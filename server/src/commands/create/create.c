@@ -72,6 +72,28 @@ static void create_thread(char *n[3], struct client_s *cli,
     }
 }
 
+static void create_comment(char *n[3], struct client_s *cli,
+    data_server_t *data)
+{
+    struct comment_s *cur = cli->thread->comments;
+    struct comment_s *new = malloc(sizeof(struct comment_s));
+    size_t size = strlen(n[1]);
+
+    if (!new)
+        return;
+    memset(new, 0, sizeof(struct comment_s));
+    strncpy(new->body, n[1], (size > 512 ? 512 : size));
+    new->timestamp = time(NULL);
+    if (!cur) {
+        cli->channel->threads->comments = new;
+    } else {
+        while (cur->next)
+            cur = cur->next;
+        cur->next = new;
+    }
+    send_comment_packet(cli, new, data);
+}
+
 void create(char buffer[BF_S], data_server_t *data, struct client_s *client)
 {
     char *sep = "|";
@@ -87,4 +109,7 @@ void create(char buffer[BF_S], data_server_t *data, struct client_s *client)
     if (client->team && client->channel && !client->thread && create[1]
         && create[2])
         create_thread(create, client, data);
+    if (client->team && client->channel && client->thread && create[1] &&
+        !create[2])
+        create_comment(create, client, data);
 }

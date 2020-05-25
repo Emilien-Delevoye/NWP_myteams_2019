@@ -20,11 +20,14 @@
 /* *** Pre-structure def *** */
 struct user_s;
 struct client_s;
+struct comment_s;
 struct thread_s;
 struct channel_s;
 struct team_s;
 typedef struct data_server_s data_server_t;
 struct packet_server_s;
+struct load_data_s;
+struct l_save_team_s;
 
 /* *** Function definition *** */
 int take_port(char const *);
@@ -50,7 +53,6 @@ void logout(char [BF_S], data_server_t *, struct client_s *);
 void create(char [BF_S], data_server_t *, struct client_s *);
 void use(char [BF_S], data_server_t *, struct client_s *);
 
-void create_log_buffer(char buffer[BF_S], struct user_s *cur, char *cmd);
 void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
 void init_channel(char *[3], struct channel_s *, struct client_s *,
     data_server_t *);
@@ -60,6 +62,16 @@ bool existing_team(char *, struct team_s *, struct client_s *);
 bool existing_channel(char *, struct channel_s *, struct client_s *);
 bool existing_thread(char *, struct thread_s *, struct client_s *);
 void use_team(char *n[2], data_server_t *data, struct client_s *cli);
+void save_team(data_server_t, int);
+void load_joined_team(int fd, struct load_data_s *load);
+void load_user(int fd, struct load_data_s *load_data);
+void load_team(int fd, struct load_data_s *load_data);
+void load_channel(int fd, struct load_data_s *load_data);
+void load_thread(int fd, struct load_data_s *load_data);
+void load_comment(int fd, struct load_data_s *load_data);
+void add_team_data(data_server_t *data, struct l_save_team_s team);
+void send_comment_packet(struct client_s *cli, struct comment_s *new,
+    data_server_t *);
 
 struct packet_server_s {
     unsigned short command;
@@ -100,7 +112,7 @@ struct client_s {
 };
 
 struct user_s {
-    char *username;
+    char username[33];
     char uuid[LUID];
     struct list_team_cli_s *joined_teams; //Liste des teams joined
     struct user_s *next;
@@ -108,6 +120,7 @@ struct user_s {
 
 struct comment_s {
     char body[512];
+    time_t timestamp;
     struct comment_s *next;
 };
 
@@ -180,5 +193,89 @@ int server_event_user_logged_in(char const *user_id);
 int server_event_user_logged_out(char const *user_id);
 int server_event_private_message_sended(char const *sender_id,
     char const *receiver_id, char const *message);
+
+/* *** Save and load data *** */
+
+struct save_user_s
+{
+    char username[33];
+    char uuid[LUID];
+};
+
+struct joi_team_s
+{
+    char uuid[LUID];
+};
+
+struct save_team_s
+{
+    char name[33];
+    char description[256];
+    char uuid[LUID];
+};
+
+struct save_channel_s
+{
+    char name[33];
+    char description[256];
+    char uuid[LUID];
+};
+
+struct save_thread_s
+{
+    char name[33];
+    char msg[513];
+    char uuid[LUID];
+    time_t timestamp;
+};
+
+struct save_comment_s
+{
+    char body[513];
+    time_t timestamp;
+};
+
+struct load_data_s {
+    struct l_save_user_s *user;
+    struct l_save_team_s *team;
+    struct l_save_user_s *cur_user;
+    struct l_save_team_s *cur_team;
+    struct l_save_channel_s *cur_channel;
+    struct l_save_thread_s *cur_thread;
+};
+
+struct l_joi_team_s {
+    struct joi_team_s joined;
+    struct l_joi_team_s *next;
+};
+
+struct l_save_user_s {
+    struct save_user_s user;
+    struct l_joi_team_s *joined;
+    struct l_save_user_s *next;
+};
+
+struct l_save_comment_s {
+    struct save_comment_s comment;
+    struct l_save_comment_s *next;
+};
+
+struct l_save_thread_s {
+    struct save_thread_s thread;
+    struct l_save_comment_s *comments;
+    struct l_save_thread_s *next;
+};
+
+struct l_save_channel_s {
+    struct save_channel_s channel;
+    struct l_save_thread_s *threads;
+    struct l_save_channel_s *next;
+};
+
+struct l_save_team_s {
+    struct save_team_s team;
+    struct l_save_channel_s *channels;
+    struct l_save_team_s *next;
+};
 
 #endif
