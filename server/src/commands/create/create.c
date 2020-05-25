@@ -82,6 +82,7 @@ static void create_comment(char *n[3], struct client_s *cli)
         return;
     memset(new, 0, sizeof(struct comment_s));
     strncpy(new->body, n[1], (size > 512 ? 512 : size));
+    new->timestamp = time(NULL);
     if (!cur) {
         cli->channel->threads->comments = new;
     } else {

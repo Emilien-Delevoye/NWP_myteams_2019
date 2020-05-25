@@ -117,6 +117,7 @@ struct user_s {
 
 struct comment_s {
     char body[512];
+    time_t timestamp;
     struct comment_s *next;
 };
 
@@ -228,6 +229,7 @@ struct save_thread_s
 struct save_comment_s
 {
     char body[513];
+    time_t timestamp;
 };
 
 struct load_data_s {

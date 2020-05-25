@@ -18,6 +18,7 @@ static void add_comment_data(struct l_save_comment_s *com,
     if (!new)
         return;
     memcpy(new->body, com->comment.body, sizeof(new->body));
+    memcpy(&new->timestamp, &com->comment.timestamp, sizeof(new->timestamp));
     new->next = NULL;
     if (!cur_thr->comments) {
         cur_thr->comments = new;
