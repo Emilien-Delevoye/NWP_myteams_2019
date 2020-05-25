@@ -26,6 +26,7 @@ struct team_s;
 typedef struct data_server_s data_server_t;
 struct packet_server_s;
 struct load_data_s;
+struct l_save_team_s;
 
 /* *** Function definition *** */
 int take_port(char const *);
@@ -67,6 +68,7 @@ void load_team(int fd, struct load_data_s *load_data);
 void load_channel(int fd, struct load_data_s *load_data);
 void load_thread(int fd, struct load_data_s *load_data);
 void load_comment(int fd, struct load_data_s *load_data);
+void add_team_data(data_server_t *data, struct l_save_team_s team);
 
 struct packet_server_s {
     unsigned short command;

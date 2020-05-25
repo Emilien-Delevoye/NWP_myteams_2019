@@ -26,7 +26,7 @@ static char get_ctrl(int fd, char *ctrl)
     return (*ctrl);
 }
 
-void load_data(data_server_t *data __attribute__((unused)))
+void load_data(data_server_t *data)
 {
     int fd = open("domain.save", O_RDONLY);
     struct load_data_s load_data = {0};
@@ -38,4 +38,6 @@ void load_data(data_server_t *data __attribute__((unused)))
         for (int a = 0; a < sizeof(value_load); ++a)
             if (ctrl == value_load[a] && fct[a])
                 fct[a](fd, &load_data);
+    for (struct l_save_team_s *cur = load_data.team; cur; cur = cur->next)
+        add_team_data(data, *cur);
 }
