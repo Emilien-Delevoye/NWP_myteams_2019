@@ -23,7 +23,7 @@ static void save_comments(struct thread_s *thread, int fd)
 
 static void save_thread(struct channel_s *channel, int fd)
 {
-    struct save_thread_s save_thread;
+    struct save_thread_s save_thread = {0};
 
     for (struct thread_s *cur = channel->threads; cur; cur = cur->next) {
         memset(&save_thread, 0, sizeof(struct save_thread_s));

@@ -32,24 +32,25 @@ static void add_thread_data(struct l_save_thread_s *thread,
     struct channel_s *cur_cha)
 {
     struct thread_s *new = malloc(sizeof(struct thread_s));
-    struct thread_s *cur_list = cur_cha->threads;
+    struct thread_s *list = NULL;
 
     if (!new)
         return;
     memcpy(new->name, thread->thread.name, sizeof(new->name));
     memcpy(new->msg, thread->thread.msg, sizeof(new->msg));
     memcpy(new->uuid, thread->thread.uuid, sizeof(new->uuid));
+    memcpy(&new->timestamp, &thread->thread.timestamp, sizeof(new->timestamp));
     new->comments = NULL;
     new->next = NULL;
     if (!cur_cha->threads) {
         cur_cha->threads = new;
+        list = new;
     } else {
-        while (cur_list->next)
-            cur_list = cur_list->next;
-        cur_list->next = new;
+        for (list = cur_cha->threads; list->next; list = list->next);
+        list->next = new;
     }
     for (struct l_save_comment_s *com = thread->comments; com; com = com->next)
-        add_comment_data(com, cur_list);
+        add_comment_data(com, list);
 }
 
 static void add_channel_data(struct l_save_channel_s *chan,
@@ -67,6 +68,7 @@ static void add_channel_data(struct l_save_channel_s *chan,
     new->threads = NULL;
     if (!cur_team->channels) {
         cur_team->channels = new;
+        cur_list = new;
     } else {
         while (cur_list->next)
             cur_list = cur_list->next;
