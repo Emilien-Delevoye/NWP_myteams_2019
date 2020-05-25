@@ -9,6 +9,6 @@
 
 void error_unk_team(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_error_unknown_team(packet.team_id);
     (void)cli;
 }
