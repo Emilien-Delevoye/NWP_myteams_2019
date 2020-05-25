@@ -9,6 +9,6 @@
 
 void error_unk_thread(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_error_unknown_thread(packet.thread_id);
     (void)cli;
 }

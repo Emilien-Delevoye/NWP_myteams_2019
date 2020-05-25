@@ -9,6 +9,6 @@
 
 void error_unk_channel(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_error_unknown_channel(packet.channel_id);
     (void)cli;
 }
