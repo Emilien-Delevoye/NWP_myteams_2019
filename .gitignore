@@ -11,3 +11,4 @@ test_input
 /server_output
 server_output
 /domain.save
+/uuid.save

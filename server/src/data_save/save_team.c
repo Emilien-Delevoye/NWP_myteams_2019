@@ -16,6 +16,8 @@ static void save_comments(struct thread_s *thread, int fd)
     for (struct comment_s *cur = thread->comments; cur; cur = cur->next) {
         memset(&save_comment, 0, sizeof(struct save_comment_s));
         memcpy(&save_comment.body, cur->body, sizeof(cur->body));
+        memcpy(&save_comment.timestamp, &cur->timestamp,
+            sizeof(cur->timestamp));
         write(fd, "6", 1);
         write(fd, &save_comment, sizeof(save_comment));
     }

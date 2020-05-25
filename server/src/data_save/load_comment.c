@@ -20,9 +20,9 @@ static void add_to_comment_list(struct save_comment_s comment,
         return;
     new->comment = comment;
     new->next = NULL;
-    current = load->cur_channel->threads->comments;
-    if (!load->cur_channel->threads->comments) {
-        load->cur_channel->threads->comments = new;
+    current = load->cur_thread->comments;
+    if (!load->cur_thread->comments) {
+        load->cur_thread->comments = new;
     } else {
         while (current->next)
             current = current->next;

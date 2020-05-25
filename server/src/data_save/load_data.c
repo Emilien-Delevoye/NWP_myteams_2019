@@ -19,7 +19,7 @@ static void (*fct[])(int, struct load_data_s *) =
     load_comment, NULL
 };
 
-static char get_ctrl(int fd, char *ctrl)
+static char get_ctrl(int fd, char ctrl[1])
 {
     int len = read(fd, ctrl, 1);
 
@@ -64,4 +64,5 @@ void load_data(data_server_t *data)
         add_team_data(data, *cur);
     for (struct l_save_user_s *cur = load_data.user; cur; cur = cur->next)
         add_user_data(data, *cur);
+    close(fd);
 }

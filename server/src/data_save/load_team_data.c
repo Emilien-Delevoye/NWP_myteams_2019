@@ -51,7 +51,7 @@ static void add_thread_data(struct l_save_thread_s *thread,
         list->next = new;
     }
     for (struct l_save_comment_s *com = thread->comments; com; com = com->next)
-        add_comment_data(com, list);
+        add_comment_data(com, new);
 }
 
 static void add_channel_data(struct l_save_channel_s *chan,
@@ -69,14 +69,13 @@ static void add_channel_data(struct l_save_channel_s *chan,
     new->threads = NULL;
     if (!cur_team->channels) {
         cur_team->channels = new;
-        cur_list = new;
     } else {
         while (cur_list->next)
             cur_list = cur_list->next;
         cur_list->next = new;
     }
     for (struct l_save_thread_s *thr = chan->threads; thr; thr = thr->next)
-        add_thread_data(thr, cur_list);
+        add_thread_data(thr, new);
 }
 
 void add_team_data(data_server_t *data, struct l_save_team_s team)

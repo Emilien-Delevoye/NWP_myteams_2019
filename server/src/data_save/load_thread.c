@@ -18,6 +18,7 @@ static void add_to_thread_list(struct save_thread_s thread,
     if (!new || !load->cur_team || !load->cur_channel ||
         !load->cur_team->channels)
         return;
+    load->cur_thread = new;
     new->thread = thread;
     new->comments = NULL;
     new->next = NULL;

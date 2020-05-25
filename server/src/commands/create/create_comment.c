@@ -8,7 +8,8 @@
 #include "server.h"
 #include <string.h>
 
-void send_comment_packet(struct client_s *cli, struct comment_s *new)
+void send_comment_packet(struct client_s *cli, struct comment_s *new,
+    data_server_t *data)
 {
     struct packet_server_s packet = {0};
 
@@ -18,4 +19,9 @@ void send_comment_packet(struct client_s *cli, struct comment_s *new)
     memcpy(&packet.time_stamp, &new->timestamp, sizeof(packet.time_stamp));
     memcpy(packet.body, new->body, sizeof(new->body));
     add_to_buffer_list(cli, packet);
+    packet.command = 4;
+    memcpy(packet.team_id, cli->team->uuid, sizeof(packet.team_id));
+    add_to_broadcast_list(data, packet, NULL);
+    server_event_thread_new_message(packet.thread_id, cli->user->uuid,
+        packet.body);
 }

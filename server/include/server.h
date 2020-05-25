@@ -70,7 +70,8 @@ void load_channel(int fd, struct load_data_s *load_data);
 void load_thread(int fd, struct load_data_s *load_data);
 void load_comment(int fd, struct load_data_s *load_data);
 void add_team_data(data_server_t *data, struct l_save_team_s team);
-void send_comment_packet(struct client_s *cli, struct comment_s *new);
+void send_comment_packet(struct client_s *cli, struct comment_s *new,
+    data_server_t *);
 
 struct packet_server_s {
     unsigned short command;
