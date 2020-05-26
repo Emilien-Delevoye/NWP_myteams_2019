@@ -19,6 +19,7 @@ static void add_comment_data(struct l_save_comment_s *com,
         return;
     memcpy(new->body, com->comment.body, sizeof(new->body));
     memcpy(&new->timestamp, &com->comment.timestamp, sizeof(new->timestamp));
+    memcpy(&new->uuid_user, &com->comment.usr_id, sizeof(new->uuid_user));
     new->next = NULL;
     if (!cur_thr->comments) {
         cur_thr->comments = new;
@@ -41,11 +42,11 @@ static void add_thread_data(struct l_save_thread_s *thread,
     memcpy(new->msg, thread->thread.msg, sizeof(new->msg));
     memcpy(new->uuid, thread->thread.uuid, sizeof(new->uuid));
     memcpy(&new->timestamp, &thread->thread.timestamp, sizeof(new->timestamp));
+    memcpy(new->uuid_user, &thread->thread.uuid_user, sizeof(new->uuid_user));
     new->comments = NULL;
     new->next = NULL;
     if (!cur_cha->threads) {
         cur_cha->threads = new;
-        list = new;
     } else {
         for (list = cur_cha->threads; list->next; list = list->next);
         list->next = new;

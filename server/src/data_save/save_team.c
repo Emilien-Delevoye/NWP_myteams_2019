@@ -15,9 +15,10 @@ static void save_comments(struct thread_s *thread, int fd)
 
     for (struct comment_s *cur = thread->comments; cur; cur = cur->next) {
         memset(&save_comment, 0, sizeof(struct save_comment_s));
-        memcpy(&save_comment.body, cur->body, sizeof(cur->body));
+        memcpy(save_comment.body, cur->body, sizeof(cur->body));
         memcpy(&save_comment.timestamp, &cur->timestamp,
             sizeof(cur->timestamp));
+        memcpy(save_comment.usr_id, cur->uuid_user, sizeof(cur->uuid_user));
         write(fd, "6", 1);
         write(fd, &save_comment, sizeof(save_comment));
     }
@@ -34,6 +35,7 @@ static void save_thread(struct channel_s *channel, int fd)
         memcpy(&save_thread.uuid, cur->uuid, sizeof(cur->uuid));
         memcpy(&save_thread.timestamp, &cur->timestamp,
             sizeof(cur->timestamp));
+        memcpy(&save_thread.uuid_user, cur->uuid_user, sizeof(cur->uuid_user));
         write(fd, "5", 1);
         write(fd, &save_thread, sizeof(save_thread));
         save_comments(cur, fd);

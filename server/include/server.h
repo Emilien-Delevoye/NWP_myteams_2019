@@ -57,6 +57,8 @@ void subscribed(char [BF_S], data_server_t *, struct client_s *);
 void unsubscribe(char [BF_S], data_server_t *, struct client_s *);
 void users(char [BF_S], data_server_t *, struct client_s *);
 void user(char [BF_S], data_server_t *, struct client_s *);
+void list(char [BF_S], data_server_t *, struct client_s *);
+void info(char [BF_S], data_server_t *, struct client_s *);
 
 void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
 void init_channel(char *[3], struct channel_s *, struct client_s *,
@@ -128,6 +130,7 @@ struct user_s {
 
 struct comment_s {
     char body[512];
+    char uuid_user[LUID];
     time_t timestamp;
     struct comment_s *next;
 };
@@ -136,6 +139,7 @@ struct thread_s {
     char name[32];
     char msg[512];
     char uuid[LUID];
+    char uuid_user[LUID];
     time_t timestamp;
     struct comment_s *comments;
     struct thread_s *next;
@@ -234,12 +238,14 @@ struct save_thread_s
     char name[33];
     char msg[513];
     char uuid[LUID];
+    char uuid_user[LUID];
     time_t timestamp;
 };
 
 struct save_comment_s
 {
     char body[513];
+    char usr_id[LUID];
     time_t timestamp;
 };
 
