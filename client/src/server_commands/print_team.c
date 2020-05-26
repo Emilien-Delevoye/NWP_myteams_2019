@@ -9,6 +9,6 @@
 
 void print_team(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_print_team(packet.team_id, packet.name, packet.description);
     (void)cli;
 }
