@@ -9,6 +9,6 @@
 
 void print_user(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_print_user(packet.user_id, packet.name, packet.user_status);
     (void)cli;
 }
