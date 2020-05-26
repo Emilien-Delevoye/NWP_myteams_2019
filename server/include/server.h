@@ -53,6 +53,7 @@ void logout(char [BF_S], data_server_t *, struct client_s *);
 void create(char [BF_S], data_server_t *, struct client_s *);
 void use(char [BF_S], data_server_t *, struct client_s *);
 void subscribe(char [BF_S], data_server_t *, struct client_s *);
+void subscribed(char [BF_S], data_server_t *, struct client_s *);
 void unsubscribe(char [BF_S], data_server_t *, struct client_s *);
 void users(char [BF_S], data_server_t *, struct client_s *);
 void user(char [BF_S], data_server_t *, struct client_s *);
