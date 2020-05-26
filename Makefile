@@ -42,7 +42,8 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/commands/subscribe/subscribe.c	\
 			server/src/commands/unsubscribe/unsubscribe.c	\
 			server/src/commands/interpret_cmd.c	\
-			server/src/commands/users/users.c
+			server/src/commands/users/users.c	\
+			server/src/commands/user/user.c
 
 SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\
