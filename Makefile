@@ -94,7 +94,9 @@ SRC_CLIENT	=	client/src/main.c	\
 			client/src/server_commands/print_users.c \
 			client/src/server_commands/pv_msg_print_msg.c \
 			client/src/server_commands/team_print_channels.c \
-			client/src/server_commands/thread_print_replies.c
+			client/src/server_commands/thread_print_replies.c	\
+			client/src/commands/info.c	\
+			client/src/commands/list.c
 
 OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 
