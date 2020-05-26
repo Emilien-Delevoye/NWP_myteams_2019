@@ -74,6 +74,8 @@ void load_comment(int fd, struct load_data_s *load_data);
 void add_team_data(data_server_t *data, struct l_save_team_s team);
 void send_comment_packet(struct client_s *cli, struct comment_s *new,
     data_server_t *);
+void interpret_cmd(char [BF_S], data_server_t *, struct client_s *);
+
 
 struct packet_server_s {
     unsigned short command;
