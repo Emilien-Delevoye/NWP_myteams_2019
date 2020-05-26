@@ -97,10 +97,10 @@ struct write_data_s {
     struct write_data_s *next;
 };
 
-struct list_team_cli_s {
+typedef struct list_team_cli_s {
     struct team_s *team;
     struct list_team_cli_s *next;
-};
+} list_team_cli_t;
 
 struct client_s {
     int client_sckt;

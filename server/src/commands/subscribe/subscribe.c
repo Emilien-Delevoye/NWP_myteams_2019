@@ -43,6 +43,14 @@ void save_subscribe(struct client_s *cli, struct list_team_cli_s *cur[2],
     add_to_buffer_list(cli, packet);
 }
 
+static void already_exist(struct client_s *cli)
+{
+    struct packet_server_s packet = {0};
+
+    packet.command = 19;
+    add_to_buffer_list(cli, packet);
+}
+
 void subscribe(char buffer[BF_S], data_server_t *data, struct client_s *client)
 {
     struct list_team_cli_s *cur[2] = {client->user->joined_teams, NULL};
@@ -53,6 +61,12 @@ void subscribe(char buffer[BF_S], data_server_t *data, struct client_s *client)
     team = get_team_by_uuid(uuid, data, client);
     if (!team)
         return;
+    for (list_team_cli_t *c = client->user->joined_teams; c; c = c->next) {
+        if (c->team == team) {
+            already_exist(client);
+            return;
+        }
+    }
     cur[1] = malloc(sizeof(struct list_team_cli_s));
     if (!cur[1])
         return;
