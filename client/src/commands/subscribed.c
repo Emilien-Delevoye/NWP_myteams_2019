@@ -17,14 +17,16 @@ void subscribed(struct client_s *client, char **command)
 
     if (strcmp(command[0], "/subscribed") != 0)
         return;
-    if (command[1] == NULL || command[2] != NULL) {
+    if (command[1] != NULL && command[2] != NULL) {
         puts(RED"Wrong parameters"DEFAULT);
         return;
     }
     while (command[0][++position])
         buffer[position] = command[0][position];
     buffer[position] = '|';
-    for (int a = 0; command[1][a]; ++a)
-        buffer[++position] = command[1][a];
+    if (command[1]) {
+        for (int a = 0; command[1][a]; ++a)
+            buffer[++position] = command[1][a];
+    }
     add_to_buffer_list(client, buffer);
 }

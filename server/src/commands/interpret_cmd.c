@@ -8,11 +8,12 @@
 #include "server.h"
 #include <string.h>
 
-const char *command[10] = {"/login", "/logout", "/create", "/use ",
-    "/subscribe", "/unsubscribe", "/users", "/user", NULL};
+const char *command[] = {"/login", "/logout", "/create", "/use",
+    "/subscribed", "/subscribe|", "/unsubscribe", "/users", "/user", NULL};
 
 void (*fct[])(char [BF_S], data_server_t *, struct client_s *) =
-    {login, logout, create, use, subscribe, unsubscribe, users, user, NULL};
+    {login, logout, create, use, subscribed, subscribe, unsubscribe, users,
+        user, NULL};
 
 void interpret_cmd(char buf[BF_S], data_server_t *data, struct client_s *cur)
 {

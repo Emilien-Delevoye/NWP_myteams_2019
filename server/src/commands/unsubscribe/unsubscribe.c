@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-static void send_unk_team(struct client_s *cli, char *uuid)
+void send_unk_team(struct client_s *cli, char *uuid)
 {
     struct packet_server_s packet = {0};
     size_t len_uuid = strlen(uuid);

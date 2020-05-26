@@ -10,5 +10,5 @@ test_input
 /.bash_history
 /server_output
 server_output
-/domain.save
-/uuid.save
+domain.save
+uuid.save
