@@ -10,10 +10,10 @@
 #include <string.h>
 
 const char *command[10] = {"/login", "/logout", "/create", "/use",
-    "/subscribe", NULL};
+    "/subscribe", "/unsubscribe", NULL};
 
 void (*fct[])(char [BF_S], data_server_t *, struct client_s *) =
-    {login, logout, create, use, subscribe, NULL};
+    {login, logout, create, use, subscribe, unsubscribe, NULL};
 
 void interpret_cmd(char buf[BF_S], data_server_t *data, struct client_s *cur)
 {

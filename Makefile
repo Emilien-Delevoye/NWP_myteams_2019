@@ -39,7 +39,8 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/data_save/load_channel.c	\
 			server/src/data_save/load_team_data.c	\
 			server/src/commands/create/create_comment.c	\
-			server/src/commands/subscribe/subscribe.c
+			server/src/commands/subscribe/subscribe.c	\
+			server/src/commands/unsubscribe/unsubscribe.c
 
 SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\
