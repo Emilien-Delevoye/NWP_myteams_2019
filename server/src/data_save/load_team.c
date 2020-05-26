@@ -37,13 +37,13 @@ void add_joined_to_user(struct joi_team_s joined, struct load_data_s *load)
     struct l_joi_team_s *new = malloc(sizeof(struct l_joi_team_s));
     struct l_joi_team_s *cur;
 
-    if (!load->user || !new)
+    if (!load->user || !new || !load->cur_user)
         return;
     new->joined = joined;
     new->next = NULL;
-    cur = load->user->joined;
+    cur = load->cur_user->joined;
     if (!cur) {
-        load->user->joined = new;
+        load->cur_user->joined = new;
     } else {
         while (cur->next)
             cur = cur->next;

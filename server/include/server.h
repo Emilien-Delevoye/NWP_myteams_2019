@@ -52,6 +52,7 @@ void login(char [BF_S], data_server_t *, struct client_s *);
 void logout(char [BF_S], data_server_t *, struct client_s *);
 void create(char [BF_S], data_server_t *, struct client_s *);
 void use(char [BF_S], data_server_t *, struct client_s *);
+void subscribe(char [BF_S], data_server_t *, struct client_s *);
 
 void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
 void init_channel(char *[3], struct channel_s *, struct client_s *,
