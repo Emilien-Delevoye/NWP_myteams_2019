@@ -79,6 +79,7 @@ void send_comment_packet(struct client_s *cli, struct comment_s *new,
     data_server_t *);
 void interpret_cmd(char [BF_S], data_server_t *, struct client_s *);
 int get_status_user(data_server_t *, struct user_s *);
+void send_unk_team(struct client_s *cli, char *uuid);
 
 struct packet_server_s {
     unsigned short command;
