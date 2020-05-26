@@ -23,7 +23,5 @@ void users(struct client_s *client, char **command)
     while (command[0][++position])
         buffer[position] = command[0][position];
     buffer[position] = '|';
-    for (int a = 0; command[1][a]; ++a)
-        buffer[++position] = command[1][a];
     add_to_buffer_list(client, buffer);
 }

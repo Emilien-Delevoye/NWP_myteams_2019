@@ -54,6 +54,7 @@ void create(char [BF_S], data_server_t *, struct client_s *);
 void use(char [BF_S], data_server_t *, struct client_s *);
 void subscribe(char [BF_S], data_server_t *, struct client_s *);
 void unsubscribe(char [BF_S], data_server_t *, struct client_s *);
+void users(char [BF_S], data_server_t *, struct client_s *);
 
 void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
 void init_channel(char *[3], struct channel_s *, struct client_s *,
@@ -74,6 +75,8 @@ void load_comment(int fd, struct load_data_s *load_data);
 void add_team_data(data_server_t *data, struct l_save_team_s team);
 void send_comment_packet(struct client_s *cli, struct comment_s *new,
     data_server_t *);
+void interpret_cmd(char [BF_S], data_server_t *, struct client_s *);
+
 
 struct packet_server_s {
     unsigned short command;
