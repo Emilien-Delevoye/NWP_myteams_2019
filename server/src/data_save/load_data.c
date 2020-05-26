@@ -28,6 +28,30 @@ static char get_ctrl(int fd, char ctrl[1])
     return (*ctrl);
 }
 
+void add_join_team(data_server_t *data, char uuid[LUID], struct user_s *cur_us)
+{
+    struct team_s *team_to_add = NULL;
+    struct list_team_cli_s *new;
+    struct list_team_cli_s *current = cur_us->joined_teams;
+
+    for (struct team_s *cur = data->l_teams; cur; cur = cur->next)
+        team_to_add = (strcmp(cur->uuid, uuid) == 0 ? cur : team_to_add);
+    if (!team_to_add)
+        return;
+    new = malloc(sizeof(struct list_team_cli_s));
+    if (!new)
+        return;
+    new->team = team_to_add;
+    new->next = NULL;
+    if (!cur_us->joined_teams) {
+        cur_us->joined_teams = new;
+    } else {
+        while (current->next)
+            current = current->next;
+        current->next = new;
+    }
+}
+
 void add_user_data(data_server_t *data, struct l_save_user_s cur)
 {
     struct user_s *new = malloc(sizeof(struct user_s));
@@ -46,6 +70,8 @@ void add_user_data(data_server_t *data, struct l_save_user_s cur)
             cur_list = cur_list->next;
         cur_list->next = new;
     }
+    for (struct l_joi_team_s *l_joi = cur.joined; l_joi; l_joi = l_joi->next)
+        add_join_team(data, l_joi->joined.uuid, new);
 }
 
 void load_data(data_server_t *data)

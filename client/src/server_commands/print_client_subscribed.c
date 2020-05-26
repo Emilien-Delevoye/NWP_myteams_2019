@@ -10,6 +10,6 @@
 void print_client_subscribed(struct packet_server_s packet,
     struct client_s *cli)
 {
-    (void)packet;
+    client_print_subscribed(packet.user_id, packet.team_id);
     (void)cli;
 }

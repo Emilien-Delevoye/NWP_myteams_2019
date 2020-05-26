@@ -16,6 +16,7 @@ void add_user_to_list(struct save_user_s save_user, struct load_data_s *load)
 
     new->user = save_user;
     new->next = NULL;
+    new->joined = NULL;
     load->cur_user = new;
     if (!load->user) {
         load->user = new;
