@@ -51,13 +51,39 @@ static void use_channel(char *n[4], struct client_s *cli, struct team_s *team)
     add_to_buffer_list(cli, packet);
 }
 
-void use_team(char *n[4], data_server_t *data, struct client_s *cli)
+static void send_team_unk(char *n[4], struct client_s *cli)
 {
     struct packet_server_s packet = {0};
 
+    packet.command = 14;
+    memcpy(packet.thread_id, n[1],
+        (strlen(n[1]) > sizeof(packet.thread_id) ?
+            sizeof(packet.thread_id) : strlen(n[1])));
+    add_to_buffer_list(cli, packet);
+}
+
+static bool check_sub_team(struct client_s *cli, struct team_s *team)
+{
+    struct packet_server_s packet = {0};
+    struct list_team_cli_s *joined_list = cli->user->joined_teams;
+
+    while (joined_list) {
+        if (joined_list->team == team)
+            return (true);
+        joined_list = joined_list->next;
+    }
+    packet.command = 18;
+    add_to_buffer_list(cli, packet);
+    return (false);
+}
+
+void use_team(char *n[4], data_server_t *data, struct client_s *cli)
+{
     for (struct team_s *teams = data->l_teams; teams; teams = teams->next) {
         if (strcmp(teams->uuid, n[1]) != 0)
             continue;
+        if (check_sub_team(cli, teams) == false)
+            return;
         if (n[2]) {
             use_channel(n, cli, teams);
             return;
@@ -67,9 +93,5 @@ void use_team(char *n[4], data_server_t *data, struct client_s *cli)
         cli->thread = NULL;
         return;
     }
-    packet.command = 14;
-    memcpy(packet.thread_id, n[1],
-        (strlen(n[1]) > sizeof(packet.thread_id) ?
-            sizeof(packet.thread_id) : strlen(n[1])));
-    add_to_buffer_list(cli, packet);
+    send_team_unk(n, cli);
 }
