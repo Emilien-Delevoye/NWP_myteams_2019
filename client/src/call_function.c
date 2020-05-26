@@ -8,10 +8,10 @@
 #include "client.h"
 #include <string.h>
 
-void (*tab_fct_commands[12])(struct client_s *client, char **command) =
+void (*tab_fct_commands[14])(struct client_s *client, char **command) =
 {
     create, login, logout, messages, send, subscribe, subscribed, unsubscribe,
-    use, user, users, NULL
+    use, user, users, list, info, NULL
 };
 
 void call_function(struct client_s *client, char **command)

@@ -51,6 +51,7 @@ void init_thread(char *n[3], struct thread_s *new,
     memset(new, 0, sizeof(struct thread_s));
     strncpy(new->name, n[1], (len_1 > 32 ? 32 : len_1));
     strncpy(new->msg, n[2], (len_2 > 512 ? 512 : len_2));
+    memcpy(new->uuid_user, cli->user->uuid, sizeof(new->uuid_user));
     new->timestamp = time(NULL);
     new->comments = NULL;
     new->next = NULL;

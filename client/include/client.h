@@ -46,6 +46,8 @@ void unsubscribe(struct client_s *client, char **command);
 void use(struct client_s *client, char **command);
 void user(struct client_s *client, char **command);
 void users(struct client_s *client, char **command);
+void list(struct client_s *client, char **command);
+void info(struct client_s *client, char **command);
 
 struct write_data_s {
     char packet[BF_S];

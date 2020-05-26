@@ -9,11 +9,12 @@
 #include <string.h>
 
 const char *command[] = {"/login", "/logout", "/create", "/use",
-    "/subscribed", "/subscribe|", "/unsubscribe", "/users", "/user", NULL};
+    "/subscribed", "/subscribe|", "/unsubscribe", "/users", "/user", "/list",
+    "/info", NULL};
 
 void (*fct[])(char [BF_S], data_server_t *, struct client_s *) =
     {login, logout, create, use, subscribed, subscribe, unsubscribe, users,
-        user, NULL};
+        user, list, info, NULL};
 
 void interpret_cmd(char buf[BF_S], data_server_t *data, struct client_s *cur)
 {
