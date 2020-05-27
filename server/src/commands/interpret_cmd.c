@@ -10,11 +10,11 @@
 
 const char *command[] = {"/login", "/logout", "/create", "/use",
     "/subscribed", "/subscribe|", "/unsubscribe", "/users", "/user", "/list",
-    "/info", "/send", NULL};
+    "/info", "/send", "/messages", NULL};
 
 void (*fct[])(char [BF_S], data_server_t *, struct client_s *) =
     {login, logout, create, use, subscribed, subscribe, unsubscribe, users,
-        user, list, info, send_cmd, NULL};
+        user, list, info, send_cmd, messages, NULL};
 
 void interpret_cmd(char buf[BF_S], data_server_t *data, struct client_s *cur)
 {

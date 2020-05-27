@@ -60,6 +60,7 @@ void user(char [BF_S], data_server_t *, struct client_s *);
 void list(char [BF_S], data_server_t *, struct client_s *);
 void info(char [BF_S], data_server_t *, struct client_s *);
 void send_cmd(char [BF_S], data_server_t *, struct client_s *);
+void messages(char [BF_S], data_server_t *, struct client_s *);
 
 void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
 void init_channel(char *[3], struct channel_s *, struct client_s *,
