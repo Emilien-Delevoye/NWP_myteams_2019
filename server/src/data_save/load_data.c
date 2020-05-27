@@ -52,6 +52,27 @@ void add_join_team(data_server_t *data, char uuid[LUID], struct user_s *cur_us)
     }
 }
 
+void add_msg_user(struct l_messages_s *cur,
+    struct user_s *usr)
+{
+    struct list_msg_cli_s *new = malloc(sizeof(struct list_msg_cli_s));
+    struct list_msg_cli_s *current = usr->msg;
+
+    if (!new)
+        return;
+    memcpy(new->msg, cur->message.message, sizeof(new->msg));
+    memcpy(new->uuid_sender, cur->message.uuid_send, sizeof(new->uuid_sender));
+    memcpy(&new->timestamp, &cur->message.timestamp, sizeof(new->timestamp));
+    new->next = NULL;
+    if (!usr->msg) {
+        usr->msg = new;
+    } else {
+        while (current->next)
+            current = current->next;
+        current->next = new;
+    }
+}
+
 void add_user_data(data_server_t *data, struct l_save_user_s cur)
 {
     struct user_s *new = malloc(sizeof(struct user_s));
@@ -72,6 +93,8 @@ void add_user_data(data_server_t *data, struct l_save_user_s cur)
     }
     for (struct l_joi_team_s *l_joi = cur.joined; l_joi; l_joi = l_joi->next)
         add_join_team(data, l_joi->joined.uuid, new);
+    for (struct l_messages_s *l_msg = cur.msg; l_msg; l_msg = l_msg->next)
+        add_msg_user(l_msg, new);
 }
 
 void load_data(data_server_t *data)

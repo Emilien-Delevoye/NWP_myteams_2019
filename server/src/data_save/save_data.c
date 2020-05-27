@@ -22,6 +22,20 @@ void save_joined_teams(struct user_s *us, int fd)
     }
 }
 
+void save_pv_messages(struct user_s *us, int fd)
+{
+    struct save_message_s message;
+
+    for (struct list_msg_cli_s *cur = us->msg; cur; cur = cur->next) {
+        memset(&message, 0, sizeof(message));
+        memcpy(message.uuid_send, cur->uuid_sender, sizeof(cur->uuid_sender));
+        memcpy(message.message, cur->msg, sizeof(cur->msg));
+        memcpy(&message.timestamp, &cur->timestamp, sizeof(cur->timestamp));
+        write(fd, "7", 1);
+        write(fd, &message, sizeof(message));
+    }
+}
+
 void save_user(data_server_t data, int fd)
 {
     struct save_user_s save_user;
@@ -33,6 +47,7 @@ void save_user(data_server_t data, int fd)
         write(fd, "1", 1);
         write(fd, &save_user, sizeof(save_user));
         save_joined_teams(cur, fd);
+        save_pv_messages(cur, fd);
     }
 }
 
@@ -46,10 +61,3 @@ void save_data(data_server_t data)
     save_team(data, fd);
     close(fd);
 }
-
-//Teams
-//Channels
-//Threads
-//Comments
-//Users
-//Privates messages

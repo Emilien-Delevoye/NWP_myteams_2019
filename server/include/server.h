@@ -122,9 +122,17 @@ struct client_s {
     bool to_delete;
 };
 
+struct list_msg_cli_s {
+    char uuid_sender[LUID];
+    char msg[513];
+    time_t timestamp;
+    struct list_msg_cli_s *next;
+};
+
 struct user_s {
     char username[33];
     char uuid[LUID];
+    struct list_msg_cli_s *msg;
     struct list_team_cli_s *joined_teams; //Liste des teams joined
     struct user_s *next;
 };
@@ -253,6 +261,7 @@ struct save_comment_s
 struct save_message_s {
     char uuid_send[LUID];
     char message[513];
+    time_t timestamp;
 };
 
 struct load_data_s {
