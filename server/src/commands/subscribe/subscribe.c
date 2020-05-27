@@ -41,6 +41,7 @@ void save_subscribe(struct client_s *cli, struct list_team_cli_s *cur[2],
     memcpy(packet.user_id, cli->user->uuid, sizeof(packet.user_id));
     memcpy(packet.team_id, team->uuid, sizeof(packet.team_id));
     add_to_buffer_list(cli, packet);
+    server_event_user_join_a_team(packet.team_id, packet.user_id);
 }
 
 static void already_exist(struct client_s *cli)
