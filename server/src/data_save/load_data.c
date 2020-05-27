@@ -76,7 +76,7 @@ void add_msg_user(struct l_messages_s *cur,
 void add_user_data(data_server_t *data, struct l_save_user_s cur)
 {
     struct user_s *new = malloc(sizeof(struct user_s));
-    struct user_s *cur_list = data->l_users;
+    struct user_s *current;
 
     if (!new)
         return;
@@ -84,12 +84,12 @@ void add_user_data(data_server_t *data, struct l_save_user_s cur)
     memcpy(new->uuid, cur.user.uuid, sizeof(new->uuid));
     new->next = NULL;
     new->joined_teams = NULL;
+    new->msg = NULL;
     if (!data->l_users) {
         data->l_users = new;
     } else {
-        while (cur_list->next)
-            cur_list = cur_list->next;
-        cur_list->next = new;
+        for (current = data->l_users; current->next; current = current->next);
+        current->next = new;
     }
     for (struct l_joi_team_s *l_joi = cur.joined; l_joi; l_joi = l_joi->next)
         add_join_team(data, l_joi->joined.uuid, new);

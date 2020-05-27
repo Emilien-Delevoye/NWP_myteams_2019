@@ -24,7 +24,7 @@ void save_joined_teams(struct user_s *us, int fd)
 
 void save_pv_messages(struct user_s *us, int fd)
 {
-    struct save_message_s message;
+    struct save_message_s message = {0};
 
     for (struct list_msg_cli_s *cur = us->msg; cur; cur = cur->next) {
         memset(&message, 0, sizeof(message));

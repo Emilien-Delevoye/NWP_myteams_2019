@@ -9,6 +9,6 @@
 
 void event_pv_mes_rx(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_event_private_message_received(packet.user_id, packet.body);
     (void)cli;
 }
