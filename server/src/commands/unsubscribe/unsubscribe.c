@@ -35,6 +35,7 @@ static void remove_use(struct client_s *cli, const struct list_team_cli_s *c,
         strcpy(packet.user_id, cli->user->uuid);
         strcpy(packet.team_id, c->team->uuid);
         add_to_buffer_list(cli, packet);
+        server_event_user_leave_a_team(packet.team_id, packet.user_id);
     }
 }
 
