@@ -18,7 +18,8 @@ void call_function(struct client_s *client, char **command)
 {
     if (!command || !command[0])
         return;
-    if (strcmp(command[0], "/login") != 0 && !client->user.username[0]) {
+    if (strcmp(command[0], "/login") != 0 && !client->user.username[0] &&
+        strcmp(command[0], "/logout") != 0) {
         client_error_unauthorized();
         return;
     }
