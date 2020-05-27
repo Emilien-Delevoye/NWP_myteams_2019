@@ -76,6 +76,7 @@ void load_team(int fd, struct load_data_s *load_data);
 void load_channel(int fd, struct load_data_s *load_data);
 void load_thread(int fd, struct load_data_s *load_data);
 void load_comment(int fd, struct load_data_s *load_data);
+void load_message(int fd, struct load_data_s *load_data);
 void add_team_data(data_server_t *data, struct l_save_team_s team);
 void send_comment_packet(struct client_s *cli, struct comment_s *new,
     data_server_t *);
@@ -249,6 +250,11 @@ struct save_comment_s
     time_t timestamp;
 };
 
+struct save_message_s {
+    char uuid_send[LUID];
+    char message[513];
+};
+
 struct load_data_s {
     struct l_save_user_s *user;
     struct l_save_team_s *team;
@@ -258,6 +264,11 @@ struct load_data_s {
     struct l_save_thread_s *cur_thread;
 };
 
+struct l_messages_s {
+    struct save_message_s message;
+    struct l_messages_s *next;
+};
+
 struct l_joi_team_s {
     struct joi_team_s joined;
     struct l_joi_team_s *next;
@@ -265,6 +276,7 @@ struct l_joi_team_s {
 
 struct l_save_user_s {
     struct save_user_s user;
+    struct l_messages_s *msg;
     struct l_joi_team_s *joined;
     struct l_save_user_s *next;
 };

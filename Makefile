@@ -46,7 +46,9 @@ SRC_SERVER	=	server/src/main.c	\
 			server/src/commands/user/user.c	\
 			server/src/commands/subscribed/subscribed.c	\
 			server/src/commands/list/list.c	\
-			server/src/commands/info/info.c
+			server/src/commands/info/info.c	\
+			server/src/commands/send/send.c	\
+			server/src/commands/messages/messages.c
 
 SRC_CLIENT	=	client/src/main.c	\
 			client/src/utils/take_port.c	\

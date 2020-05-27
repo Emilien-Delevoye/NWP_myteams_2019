@@ -16,7 +16,7 @@ const char value_load[10] = "1234567890";
 static void (*fct[])(int, struct load_data_s *) =
 {
     load_user, load_joined_team, load_team, load_channel, load_thread,
-    load_comment, NULL
+    load_comment, load_message, NULL
 };
 
 static char get_ctrl(int fd, char ctrl[1])
