@@ -16,7 +16,7 @@ const char value_load[10] = "1234567890";
 static void (*fct[])(int, struct load_data_s *) =
 {
     load_user, load_joined_team, load_team, load_channel, load_thread,
-    load_comment, NULL
+    load_comment, load_message, NULL
 };
 
 static char get_ctrl(int fd, char ctrl[1])
@@ -52,10 +52,31 @@ void add_join_team(data_server_t *data, char uuid[LUID], struct user_s *cur_us)
     }
 }
 
+void add_msg_user(struct l_messages_s *cur,
+    struct user_s *usr)
+{
+    struct list_msg_cli_s *new = malloc(sizeof(struct list_msg_cli_s));
+    struct list_msg_cli_s *current = usr->msg;
+
+    if (!new)
+        return;
+    memcpy(new->msg, cur->message.message, sizeof(new->msg));
+    memcpy(new->uuid_sender, cur->message.uuid_send, sizeof(new->uuid_sender));
+    memcpy(&new->timestamp, &cur->message.timestamp, sizeof(new->timestamp));
+    new->next = NULL;
+    if (!usr->msg) {
+        usr->msg = new;
+    } else {
+        while (current->next)
+            current = current->next;
+        current->next = new;
+    }
+}
+
 void add_user_data(data_server_t *data, struct l_save_user_s cur)
 {
     struct user_s *new = malloc(sizeof(struct user_s));
-    struct user_s *cur_list = data->l_users;
+    struct user_s *current;
 
     if (!new)
         return;
@@ -63,15 +84,17 @@ void add_user_data(data_server_t *data, struct l_save_user_s cur)
     memcpy(new->uuid, cur.user.uuid, sizeof(new->uuid));
     new->next = NULL;
     new->joined_teams = NULL;
+    new->msg = NULL;
     if (!data->l_users) {
         data->l_users = new;
     } else {
-        while (cur_list->next)
-            cur_list = cur_list->next;
-        cur_list->next = new;
+        for (current = data->l_users; current->next; current = current->next);
+        current->next = new;
     }
     for (struct l_joi_team_s *l_joi = cur.joined; l_joi; l_joi = l_joi->next)
         add_join_team(data, l_joi->joined.uuid, new);
+    for (struct l_messages_s *l_msg = cur.msg; l_msg; l_msg = l_msg->next)
+        add_msg_user(l_msg, new);
 }
 
 void load_data(data_server_t *data)

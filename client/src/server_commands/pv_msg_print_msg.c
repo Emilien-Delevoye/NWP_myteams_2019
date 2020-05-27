@@ -9,6 +9,7 @@
 
 void pv_msg_print_msg(struct packet_server_s packet, struct client_s *cli)
 {
-    (void)packet;
+    client_private_message_print_messages(packet.user_id, packet.time_stamp,
+        packet.body);
     (void)cli;
 }

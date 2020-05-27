@@ -56,6 +56,7 @@ static struct user_s *add_user(data_server_t *data, char username[33])
         return (NULL);
     new->next = NULL;
     new->joined_teams = NULL;
+    new->msg = NULL;
     memcpy(new->username, username, sizeof(new->username));
     uuid_generate_random(uuid);
     uuid_unparse(uuid, new->uuid);

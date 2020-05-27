@@ -59,6 +59,8 @@ void users(char [BF_S], data_server_t *, struct client_s *);
 void user(char [BF_S], data_server_t *, struct client_s *);
 void list(char [BF_S], data_server_t *, struct client_s *);
 void info(char [BF_S], data_server_t *, struct client_s *);
+void send_cmd(char [BF_S], data_server_t *, struct client_s *);
+void messages(char [BF_S], data_server_t *, struct client_s *);
 
 void init_team(char *[3], struct team_s *, struct client_s *, data_server_t *);
 void init_channel(char *[3], struct channel_s *, struct client_s *,
@@ -76,6 +78,7 @@ void load_team(int fd, struct load_data_s *load_data);
 void load_channel(int fd, struct load_data_s *load_data);
 void load_thread(int fd, struct load_data_s *load_data);
 void load_comment(int fd, struct load_data_s *load_data);
+void load_message(int fd, struct load_data_s *load_data);
 void add_team_data(data_server_t *data, struct l_save_team_s team);
 void send_comment_packet(struct client_s *cli, struct comment_s *new,
     data_server_t *);
@@ -121,9 +124,17 @@ struct client_s {
     bool to_delete;
 };
 
+struct list_msg_cli_s {
+    char uuid_sender[LUID];
+    char msg[513];
+    time_t timestamp;
+    struct list_msg_cli_s *next;
+};
+
 struct user_s {
     char username[33];
     char uuid[LUID];
+    struct list_msg_cli_s *msg;
     struct list_team_cli_s *joined_teams; //Liste des teams joined
     struct user_s *next;
 };
@@ -249,6 +260,12 @@ struct save_comment_s
     time_t timestamp;
 };
 
+struct save_message_s {
+    char uuid_send[LUID];
+    char message[513];
+    time_t timestamp;
+};
+
 struct load_data_s {
     struct l_save_user_s *user;
     struct l_save_team_s *team;
@@ -258,6 +275,11 @@ struct load_data_s {
     struct l_save_thread_s *cur_thread;
 };
 
+struct l_messages_s {
+    struct save_message_s message;
+    struct l_messages_s *next;
+};
+
 struct l_joi_team_s {
     struct joi_team_s joined;
     struct l_joi_team_s *next;
@@ -265,6 +287,7 @@ struct l_joi_team_s {
 
 struct l_save_user_s {
     struct save_user_s user;
+    struct l_messages_s *msg;
     struct l_joi_team_s *joined;
     struct l_save_user_s *next;
 };
