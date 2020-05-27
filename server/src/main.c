@@ -8,6 +8,7 @@
 #include "server.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 void help(void)
 {
@@ -44,5 +45,6 @@ int main(int ac, char **av)
         help();
         return (84);
     }
+    srand(time(NULL));
     return (server(av[1]));
 }
