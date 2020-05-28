@@ -15,10 +15,8 @@ void list(struct client_s *client, char **command)
 
     if (strcmp(command[0], "/list") != 0)
         return;
-    if (command[1] != NULL) {
-        puts(RED"Wrong parameters"DEFAULT);
+    if (command[1] != NULL)
         return;
-    }
     while (command[0][++position])
         buffer[position] = command[0][position];
     buffer[position] = '|';

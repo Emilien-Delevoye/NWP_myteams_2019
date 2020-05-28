@@ -23,8 +23,7 @@ static void write_to_client(struct client_s *cur)
 static void add_broadcast(data_server_t *data, struct write_data_s *cur)
 {
     for (struct client_s *act = data->l_clients; act; act = act->next) {
-        if ((!act->user && cur->packet.command != 0 &&
-            cur->packet.command != 1) || act == cur->ignore)
+        if (!act->user || act == cur->ignore)
             continue;
         add_to_buffer_list(act, cur->packet);
     }

@@ -29,11 +29,8 @@ void create(struct client_s *client, char **command)
 
     if (strcmp(command[0], "/create") != 0)
         return;
-    if (command[1] == NULL || (command[2] != NULL && command[3] != NULL)) {
-        puts(RED"Missing parameter"DEFAULT);
+    if (command[1] == NULL || (command[2] != NULL && command[3] != NULL))
         return;
-    }
     extract_command_create(command, buffer);
-    puts("buffer");
     add_to_buffer_list(client, buffer);
 }

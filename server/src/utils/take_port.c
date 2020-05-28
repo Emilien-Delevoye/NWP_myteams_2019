@@ -20,9 +20,7 @@ int take_port(char const *port_str)
 {
     int port = 0;
 
-    if (!check_num_str(port_str) || !sscanf(port_str, "%d", &port)) {
-        puts("Port error");
+    if (!check_num_str(port_str) || !sscanf(port_str, "%d", &port))
         return (-1);
-    }
     return (port);
 }
