@@ -29,6 +29,22 @@ static void init_client(struct client_s *n_client)
     n_client->to_delete = false;
 }
 
+static void send_already_logged_in(struct client_s *client,
+    data_server_t *data)
+{
+    struct packet_server_s packet = {0};
+
+    for (struct client_s *cur = data->l_clients; cur; cur = cur->next) {
+        if (!cur->user)
+            continue;
+        memset(&packet, 0, sizeof(packet));
+        memcpy(packet.user_id, cur->user->uuid, sizeof(packet.user_id));
+        memcpy(packet.name, cur->user->username, sizeof(packet.name));
+        packet.command = 1;
+        add_to_buffer_list(client, packet);
+    }
+}
+
 static void add_new_client(data_server_t *data, int new_fd)
 {
     struct client_s *n_client = malloc(sizeof(struct client_s));
@@ -48,6 +64,7 @@ static void add_new_client(data_server_t *data, int new_fd)
             current = current->next;
         current->next = n_client;
     }
+    send_already_logged_in(n_client, data);
 }
 
 void accept_connections(data_server_t *data)
