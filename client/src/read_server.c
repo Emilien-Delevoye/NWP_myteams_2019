@@ -66,7 +66,6 @@ void read_server(struct client_s *client)
 
     if (size_read == 0) {
         client->server_running = false;
-        puts(RED"[STOP] Server is closed"DEFAULT);
         return;
     }
     if (packet.command == 0 || packet.command > sizeof(rx_server))

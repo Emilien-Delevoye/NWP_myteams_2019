@@ -22,6 +22,5 @@ void list(struct client_s *client, char **command)
     while (command[0][++position])
         buffer[position] = command[0][position];
     buffer[position] = '|';
-    fputs("pouet pouet\n", stderr);
     add_to_buffer_list(client, buffer);
 }

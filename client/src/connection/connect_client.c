@@ -24,8 +24,7 @@ int connect_client(const char *ip, int port)
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(port);
     servaddr.sin_addr.s_addr = inet_addr(ip);
-    if (connect(fd, (struct sockaddr *)&servaddr, sizeof(servaddr)) != 0) {
+    if (connect(fd, (struct sockaddr *)&servaddr, sizeof(servaddr)) != 0)
         return (-1);
-    }
     return (fd);
 }

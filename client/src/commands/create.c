@@ -9,7 +9,6 @@
 #include <string.h>
 #include <stdio.h>
 
-//TODO: Peut être utiliser cette fonction pour extraire toutes les commandes
 static void extract_command_create(char **command, char buffer[BF_S])
 {
     int position = - 1;
