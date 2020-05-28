@@ -16,6 +16,8 @@
 #define BF_S 2048
 #define U_TC (const char *)
 #define LUID 37
+#define NEWADDR (struct sockaddr *)&new_addr
+#define LENADDR (socklen_t *)&len
 
 /* *** Pre-structure def *** */
 struct user_s;

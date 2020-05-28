@@ -15,9 +15,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#define NEWADDR (struct sockaddr *)&new_addr
-#define LENADDR (socklen_t *)&len
-
 static void init_client(struct client_s *n_client)
 {
     n_client->next = NULL;
