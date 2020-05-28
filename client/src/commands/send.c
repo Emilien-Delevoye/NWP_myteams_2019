@@ -16,10 +16,8 @@ void send(struct client_s *client, char **command)
 
     if (strcmp(command[0], "/send") != 0)
         return;
-    if (command[1] == NULL || command[2] == NULL || command[3] != NULL) {
-        puts(RED"Wrong parameters"DEFAULT);
+    if (command[1] == NULL || command[2] == NULL || command[3] != NULL)
         return;
-    }
     while (command[0][++position])
         buffer[position] = command[0][position];
     buffer[position] = '|';
@@ -28,6 +26,5 @@ void send(struct client_s *client, char **command)
     buffer[++position] = '|';
     for (int a = 0; command[2][a]; ++a)
         buffer[++position] = command[2][a];
-    puts(buffer);
     add_to_buffer_list(client, buffer);
 }
