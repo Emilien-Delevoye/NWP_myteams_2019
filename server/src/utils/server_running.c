@@ -39,9 +39,7 @@ int setup_sigcatch(void)
 
 bool server_running(void)
 {
-    if (memory_running(42) == 1) {
-        puts(BLINK RED"\r[STOP] Server will shutdown."DEFAULT);
+    if (memory_running(42) == 1)
         return (false);
-    }
     return (true);
 }
