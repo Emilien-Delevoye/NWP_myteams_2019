@@ -60,7 +60,6 @@ static struct user_s *add_user(data_server_t *data, char username[33])
     memcpy(new->username, username, sizeof(new->username));
     uuid_generate_random(uuid);
     uuid_unparse(uuid, new->uuid);
-    printf(GREEN"[INFO] New user \"%s\" created\n"DEFAULT, username);
     add_to_user_list(data, new);
     server_event_user_created(new->uuid, new->username);
     server_event_user_logged_in(new->uuid);

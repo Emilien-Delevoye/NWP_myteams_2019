@@ -36,8 +36,6 @@ bool not_valid_command(const char *buf)
     }
     if (quotes % 2 != 0)
         not_valid = true;
-    if (not_valid)
-        printf(RED"Invalid command : %s"DEFAULT, buf);
     return (not_valid);
 }
 
