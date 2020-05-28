@@ -13,6 +13,7 @@ void messages(char buffer[BF_S], data_server_t *data, struct client_s *cli)
     char *cr[2] = {NULL, NULL};
     struct packet_server_s packet = {0};
 
+    (void)data;
     cr[0] = strtok(buffer, "|");
     cr[1] = strtok(NULL, "|");
     if (!cr[0] || !cr[1] || strlen(cr[1]) != (LUID - 1))
