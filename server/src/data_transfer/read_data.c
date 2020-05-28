@@ -12,7 +12,6 @@
 
 static void close_client(struct client_s *to_close)
 {
-    printf(YELLOW"[INFO] client disconnected\n"DEFAULT);
     close(to_close->client_sckt);
     to_close->to_delete = true;
 }
