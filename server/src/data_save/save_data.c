@@ -28,7 +28,8 @@ void save_pv_messages(struct user_s *us, int fd)
 
     for (struct list_msg_cli_s *cur = us->msg; cur; cur = cur->next) {
         memset(&message, 0, sizeof(message));
-        memcpy(message.uuid_send, cur->uuid_sender, sizeof(cur->uuid_sender));
+        memcpy(message.uuid_rx, cur->uuid_rx, sizeof(cur->uuid_rx));
+        memcpy(message.uuid_tx, cur->uuid_tx, sizeof(cur->uuid_tx));
         memcpy(message.message, cur->msg, sizeof(cur->msg));
         memcpy(&message.timestamp, &cur->timestamp, sizeof(cur->timestamp));
         write(fd, "7", 1);

@@ -61,7 +61,8 @@ void add_msg_user(struct l_messages_s *cur,
     if (!new)
         return;
     memcpy(new->msg, cur->message.message, sizeof(new->msg));
-    memcpy(new->uuid_sender, cur->message.uuid_send, sizeof(new->uuid_sender));
+    memcpy(new->uuid_rx, cur->message.uuid_rx, sizeof(new->uuid_rx));
+    memcpy(new->uuid_tx, cur->message.uuid_tx, sizeof(new->uuid_tx));
     memcpy(&new->timestamp, &cur->message.timestamp, sizeof(new->timestamp));
     new->next = NULL;
     if (!usr->msg) {

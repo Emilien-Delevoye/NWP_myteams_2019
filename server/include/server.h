@@ -18,7 +18,10 @@
 #define LUID 37
 #define NEWADDR (struct sockaddr *)&new_addr
 #define LENADDR (socklen_t *)&len
-
+#define IS_MSG (strcmp(cur->uuid_tx, cr[1]) == 0 && \
+                strcmp(cur->uuid_rx, cli->user->uuid) == 0) ||  \
+                (strcmp(cur->uuid_tx, cli->user->uuid) == 0 &&  \
+                strcmp(cur->uuid_rx, cr[1]) == 0)
 /* *** Pre-structure def *** */
 struct user_s;
 struct client_s;
@@ -49,6 +52,7 @@ void read_buffer(char buffer[BF_S], data_server_t *data, struct client_s *cur);
 void add_to_buffer_list(struct client_s *client, struct packet_server_s pack);
 void add_to_broadcast_list(data_server_t *data, struct packet_server_s pack,
     struct client_s *ignore);
+void add_to_current_usr(struct packet_server_s packet, struct client_s *cli);
 
 void login(char [BF_S], data_server_t *, struct client_s *);
 void logout(char [BF_S], data_server_t *, struct client_s *);
@@ -127,7 +131,8 @@ struct client_s {
 };
 
 struct list_msg_cli_s {
-    char uuid_sender[LUID];
+    char uuid_rx[LUID];
+    char uuid_tx[LUID];
     char msg[513];
     time_t timestamp;
     struct list_msg_cli_s *next;
@@ -184,21 +189,6 @@ typedef struct data_server_s {
     struct write_data_s *broadcast; //Liste de broadcast
     int (*get_max_fd)(data_server_t);
 } data_server_t;
-
-
-/* *** Colors *** */
-#define DEFAULT "\033[0m"
-#define HIGHLIGHT "\033[1m"
-#define UNDERLINE "\033[4m"
-#define BLINK "\033[5m"
-#define BLACK "\033[30m"
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define YELLOW "\033[33m"
-#define BLUE "\033[34m"
-#define PURPLE "\033[35m"
-#define CYAN "\033[36m"
-#define WHITE "\033[37m"
 
 /* *** Lib functions *** */
 
@@ -263,7 +253,8 @@ struct save_comment_s
 };
 
 struct save_message_s {
-    char uuid_send[LUID];
+    char uuid_rx[LUID];
+    char uuid_tx[LUID];
     char message[513];
     time_t timestamp;
 };
