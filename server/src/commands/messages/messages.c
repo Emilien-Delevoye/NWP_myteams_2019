@@ -19,7 +19,7 @@ void messages(char buffer[BF_S], data_server_t *data, struct client_s *cli)
     if (!cr[0] || !cr[1] || strlen(cr[1]) != (LUID - 1))
         return;
     for (struct list_msg_cli_s *cur = cli->user->msg; cur; cur = cur->next) {
-        if (strcmp(cur->uuid_sender, cr[1]) == 0) {
+        if (IS_MSG) {
             memset(&packet, 0, sizeof(packet));
             packet.command = 13;
             memcpy(packet.user_id, cr[1], LUID - 1);

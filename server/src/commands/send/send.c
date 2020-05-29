@@ -26,8 +26,8 @@ static void send_event(data_server_t *data, struct user_s *usr,
     }
 }
 
-static void add_to_user(char uuid[LUID], char message[513], struct user_s *usr,
-    time_t timestamp)
+static void add_to_user(struct user_s *usr, struct packet_server_s packet,
+    struct client_s *cli)
 {
     struct list_msg_cli_s *new = malloc(sizeof(struct list_msg_cli_s));
     struct list_msg_cli_s *cur = usr->msg;
@@ -35,9 +35,11 @@ static void add_to_user(char uuid[LUID], char message[513], struct user_s *usr,
     if (!new)
         return;
     memset(new, 0, sizeof(struct list_msg_cli_s));
-    strcpy(new->uuid_sender, uuid);
-    strcpy(new->msg, message);
-    new->timestamp = timestamp;
+    strcpy(new->uuid_rx, packet.team_id);
+    strcpy(new->uuid_tx, packet.user_id);
+    strcpy(new->msg, packet.body);
+    new->next = NULL;
+    new->timestamp = packet.time_stamp;
     if (!cur) {
         usr->msg = new;
     } else {
@@ -45,6 +47,7 @@ static void add_to_user(char uuid[LUID], char message[513], struct user_s *usr,
             cur = cur->next;
         cur->next = new;
     }
+    add_to_current_usr(packet, cli);
 }
 
 static void add_message_to_user(char uuid[LUID], data_server_t *data,
@@ -53,13 +56,14 @@ static void add_message_to_user(char uuid[LUID], data_server_t *data,
     struct packet_server_s packet = {0};
 
     packet.command = 3;
-    memcpy(packet.user_id, uuid, sizeof(packet.user_id));
+    memcpy(packet.user_id, cli->user->uuid, sizeof(packet.user_id));
+    memcpy(packet.team_id, uuid, sizeof(packet.team_id));
     memcpy(packet.body, msg, sizeof(packet.body));
     packet.time_stamp = time(NULL);
     for (struct user_s *cur = data->l_users; cur; cur = cur->next) {
         if (strcmp(cur->uuid, uuid) == 0) {
             server_event_private_message_sended(cli->user->uuid, uuid, msg);
-            add_to_user(packet.user_id, packet.body, cur, packet.time_stamp);
+            add_to_user(cur, packet, cli);
             send_event(data, cur, packet);
             return;
         }
