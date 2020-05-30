@@ -17,6 +17,11 @@ void use(char buffer[BF_S], data_server_t *data, struct client_s *client)
     create[1] = strtok(NULL, sep);
     create[2] = strtok(NULL, sep);
     create[3] = strtok(NULL, sep);
+    if (!create[1]) {
+        client->team = NULL;
+        client->channel = NULL;
+        client->thread = NULL;
+    }
     if (create[1])
         use_team(create, data, client);
 }

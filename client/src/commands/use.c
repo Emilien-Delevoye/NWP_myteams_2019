@@ -16,8 +16,8 @@ void use(struct client_s *client, char **command)
 
     if (strcmp(command[0], "/use") != 0)
         return;
-    if (command[1] == NULL || (command[2] != NULL && command[3] != NULL
-        && command[4] != NULL))
+    if ((command[1] && command[2] != NULL && command[3] != NULL &&
+        command[4] != NULL))
         return;
     while (command[0][++position])
         buffer[position] = command[0][position];

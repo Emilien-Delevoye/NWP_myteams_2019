@@ -53,6 +53,8 @@ void add_to_buffer_list(struct client_s *client, struct packet_server_s pack);
 void add_to_broadcast_list(data_server_t *data, struct packet_server_s pack,
     struct client_s *ignore);
 void add_to_current_usr(struct packet_server_s packet, struct client_s *cli);
+void add_to_sub_cli(data_server_t *, struct packet_server_s,
+    struct client_s *);
 
 void login(char [BF_S], data_server_t *, struct client_s *);
 void logout(char [BF_S], data_server_t *, struct client_s *);
