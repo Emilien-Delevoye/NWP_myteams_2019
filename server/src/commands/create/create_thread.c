@@ -25,6 +25,24 @@ bool existing_thread(char *name, struct thread_s *list, struct client_s *cli)
     return (false);
 }
 
+static void read_joined_list(struct packet_server_s pack, struct client_s *cli,
+    struct client_s *cr)
+{
+    for (struct list_team_cli_s *j = cr->user->joined_teams; j; j = j->next)
+        if (j->team == cli->team)
+            add_to_buffer_list(cr, pack);
+}
+
+void add_to_sub_cli(data_server_t *data, struct packet_server_s packet,
+    struct client_s *cli)
+{
+    for (struct client_s *cur = data->l_clients; cur; cur = cur->next) {
+        if (!cur->user)
+            continue;
+        read_joined_list(packet, cli, cur);
+    }
+}
+
 static void ping_client_n_thread(struct thread_s *new, struct client_s *cli,
     data_server_t *data)
 {
@@ -36,7 +54,7 @@ static void ping_client_n_thread(struct thread_s *new, struct client_s *cli,
     memcpy(packet.name, new->name, sizeof(new->name));
     memcpy(packet.body, new->msg, sizeof(new->msg));
     packet.time_stamp = new->timestamp;
-    add_to_broadcast_list(data, packet, NULL);
+    add_to_sub_cli(data, packet, cli);
     packet.command = 26;
     add_to_buffer_list(cli, packet);
 }

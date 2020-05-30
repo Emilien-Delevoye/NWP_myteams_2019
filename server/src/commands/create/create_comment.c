@@ -21,7 +21,7 @@ void send_comment_packet(struct client_s *cli, struct comment_s *new,
     add_to_buffer_list(cli, packet);
     packet.command = 4;
     memcpy(packet.team_id, cli->team->uuid, sizeof(packet.team_id));
-    add_to_broadcast_list(data, packet, NULL);
+    add_to_sub_cli(data, packet, cli);
     server_event_thread_new_message(packet.thread_id, cli->user->uuid,
         packet.body);
 }

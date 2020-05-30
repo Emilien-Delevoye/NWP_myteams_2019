@@ -34,7 +34,7 @@ static void ping_client_n_channel(struct channel_s *new, struct client_s *cli,
     memcpy(packet.channel_id, new->uuid, sizeof(new->uuid));
     memcpy(packet.name, new->name, sizeof(new->name));
     memcpy(packet.description, new->desc, sizeof(new->desc));
-    add_to_broadcast_list(data, packet, NULL);
+    add_to_sub_cli(data, packet, cli);
     packet.command = 25;
     add_to_buffer_list(cli, packet);
 }
