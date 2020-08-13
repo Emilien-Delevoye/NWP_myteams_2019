@@ -111,5 +111,5 @@ The server will send a structure to the client when an event or a command need t
     
     - The structure needs to be initialised with 0.
 
-Project by Emilien Delevoye (emilien.delevoye@epitech.eu and Cyprien Ricque (cyprien.ricque@epitech.eu)
+Project by Emilien Delevoye (emilien.delevoye@epitech.eu) and Cyprien Ricque (cyprien.ricque@epitech.eu)
 
